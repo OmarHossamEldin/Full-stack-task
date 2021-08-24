@@ -1,6 +1,6 @@
 # fullStack TaskFrontEnd (fullStack TaskFrontEnd)
 
-fullStack TaskFrontEnd for aliforas management
+fullStack TaskFrontEnd 
 
 ## Install the dependencies
 ```bash

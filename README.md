@@ -6,7 +6,7 @@
 1. logout
 1. CRUD admin
 1. CRUD employee
-1. Performance
+1. Performance review
 
 
 ## Perquisites
@@ -14,6 +14,8 @@
  - PHP8
  - composer
  - npm
+ - vue-cli
+ - quasar-cli
 
 ## Built With
 
