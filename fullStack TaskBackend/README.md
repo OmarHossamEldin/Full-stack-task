@@ -1,12 +1,9 @@
-# Mini CRM 
-> testing scaffolding 
+# Full stack task 
+> Backend Api
 
 ## description 
-Basically, project to manage companies and their employees. Full Stack task.
+Basically, Full Stack task.
 
-## Manages 
-- Companies 
-- Employees
 
 ## Getting started
 - run the commands in your terminal 
@@ -16,8 +13,7 @@ Basically, project to manage companies and their employees. Full Stack task.
 1. navigate into your database configs and change it to your locale database
 1. press Esc then :x
 1. run php artisan migrate --seed
-1. php artisan storage link
-1. you are ready to go now
+1. you are ready to go now with backend Api
 
 ## App Directory Structure
 ```
@@ -32,4 +28,37 @@ Basically, project to manage companies and their employees. Full Stack task.
 ├───Models
 ├───Providers
 └───Repositories
+├───bootstrap
+│   └───cache
+├───config
+├───database
+│   ├───factories
+│   ├───migrations
+│   └───seeders
+├───public
+│   ├───css
+│   └───js
+├───resources
+│   ├───css
+│   ├───js
+│   ├───lang
+│   │   └───en
+│   ├───sass
+│   └───views
+├───routes
+├───storage
+│   ├───app
+│   │   └───public
+│   ├───framework
+│   │   ├───cache
+│   │   │   └───data
+│   │   ├───sessions
+│   │   ├───testing
+│   │   └───views
+│   └───logs
+├───tests
+│   ├───Feature
+│   └───Unit
+│   
+└───vendor
 ```
