@@ -31,8 +31,6 @@ const actions = {
         try {
             const response = await axios.post('admin/auth/logout');
             Vue.prototype.$axios.defaults.headers.common.Authorization = null;
-            // localStorage.removeItem('roles');
-            // localStorage.removeItem('permissions');
             localStorage.removeItem('user');
             localStorage.removeItem('status');
             localStorage.removeItem('token');
@@ -60,7 +58,7 @@ const actions = {
 };
 
 const mutations = {
-    authenticateUser:(state, data) => (state.user = data.person, state.roles = data.roles, state.permissions = data.permissions, state.status = 'Authenticated'),
+    authenticateUser:(state, data) => (state.user = data.person, state.permissions = data.permissions, state.status = 'Authenticated'),
     logout:(state, data) => (state.user = data, state.roles = data, state.permissions = data, state.status = data),
     updatingProfile:(state, data) => (state.user = data.person)
 }
