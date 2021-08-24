@@ -2,7 +2,6 @@
 
 - Full stack task provide the following services for the user.
 
-1. registration
 1. login
 1. logout
 1. CRUD admin
