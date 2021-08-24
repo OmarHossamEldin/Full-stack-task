@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -33,5 +33,20 @@ class User extends Authenticatable
         $this->api_token = Str::random(60);
         $this->save();
         return $this->api_token;
+    }
+
+    public function reviewer()
+    {
+        return $this->hasMany('App\Models\FeedBackRequest', 'reviewer_id');
+    }
+
+    public function reviewee()
+    {
+        return $this->hasMany('App\Models\FeedBackRequest', 'reviewee_id');
+    }
+
+    public function feedback()
+    {
+        return $this->hasMany('App\Models\FeedBackRequest', 'reviewer_id');
     }
 }
