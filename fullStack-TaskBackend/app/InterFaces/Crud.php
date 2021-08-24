@@ -10,5 +10,5 @@ interface Crud
 
     public function update(object $model, array $data): object;
 
-    public function delete(object $model): int;
+    public function delete(object $model): bool;
 }

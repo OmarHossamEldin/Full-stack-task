@@ -3,9 +3,9 @@
 namespace App\Repositories;
 
 use App\Interfaces\Crud;
-use App\Models\User;
+use App\Models\FeedBackRequest;
 
-class UserRepository implements Crud
+class FeedBackRequestRepository implements Crud
 {
     /**
      * List resources in the database
@@ -14,8 +14,8 @@ class UserRepository implements Crud
      */
     public function list(): array
     {
-        $users = User::all()->toArray();
-        return $users;
+        $feedBackRequest = FeedBackRequest::all()->toArray();
+        return $feedBackRequest;
     }
 
     /**
@@ -27,21 +27,22 @@ class UserRepository implements Crud
     public function create(array $validatedData): object
     {
         $user = auth('api')->user();
-        $user = User::create($validatedData);
-        return $user;
+        $validatedData['user_id'] = $user->id;
+        $feedBackRequest = FeedBackRequest::create($validatedData);
+        return $feedBackRequest;
     }
 
     /**
      * Updates the resource in the database
      *
      * @param array $validatedData
-     * @param object $user
+     * @param object $feedBackRequest
      * @return object
      */
-    public function update(object $user, array $validatedData): object
+    public function update(object $feedBackRequest, array $validatedData): object
     {
-        $user->update($validatedData);
-        return $user;
+        $feedBackRequest->update($validatedData);
+        return $feedBackRequest;
     }
 
     /**
@@ -50,9 +51,9 @@ class UserRepository implements Crud
      * @param object $user
      * @return string
      */
-    public function delete(object $user): bool
+    public function delete(object $feedBackRequest): bool
     {
-        $user->delete();
+        $feedBackRequest->delete();
         return true;
     }
 }

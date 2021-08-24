@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Auth\UserRequest;
+use App\Http\Requests\UserRequest;
 use App\Repositories\UserRepository;
 use App\Helpers\JsonResponse;
 use App\Models\User;
@@ -55,7 +55,7 @@ class UserController extends Controller
      */
     public function update(UserRequest  $request, User $user, UserRepository $userRepository)
     {
-        $user = $userRepository->update($request->validated(), $user);
+        $user = $userRepository->update($user, $request->validated());
 
         return JsonResponse::response(message: Lang::get('db.success'), data: ['user' => $user], statusCode: 206);
     }

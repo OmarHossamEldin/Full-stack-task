@@ -19,7 +19,6 @@ Route::group(['prefix' => '/'], function () {
         Route::group(['middleware' => 'guest'], function () {
             Route::post('login', 'App\Http\Controllers\Auth\LoginController@login')->name('login');
         });
-        
         //Authenticated 
         Route::group(['middleware' => ['auth:api']], function () {
 
@@ -28,8 +27,8 @@ Route::group(['prefix' => '/'], function () {
             Route::group(['middleware' => ['admin.guard']], function () {
 
                 Route::apiResources([
-                    'users', 'App\Http\Controllers\UserController',
-                    'feed-back-requests', 'App\Http\Controllers\FeedBackRequestController'
+                    'users' => 'App\Http\Controllers\UserController',
+                    'feed-back-requests' => 'App\Http\Controllers\FeedBackRequestController'
                 ]);
             });
         });

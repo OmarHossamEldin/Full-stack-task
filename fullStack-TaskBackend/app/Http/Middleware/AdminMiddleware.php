@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Helpers\JsonResponse;
+use Lang;
 
 class AdminMiddleware
 {
@@ -16,6 +18,6 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        return auth('api')->user()->is_admin === true ? $next($request) : JsonResponse::response(errors: [Lang::get('auth.unAuthorized')], statusCode: 403);
+        return auth('api')->user()?->is_admin === true ? $next($request) : JsonResponse::response(errors: [Lang::get('auth.unAuthorized')], statusCode: 403);
     }
 }

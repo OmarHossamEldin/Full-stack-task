@@ -27,6 +27,14 @@ class User extends Authenticatable
         'api_token'
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_admin' => 'boolean',
+    ];
 
     public function ApiTokenGenerater()
     {

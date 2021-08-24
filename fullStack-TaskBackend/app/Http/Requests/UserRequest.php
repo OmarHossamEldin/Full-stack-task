@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,7 +24,7 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'email' => "required|email|unique:users,{$this->user?->id}",
+            'email' => "required|email|unique:users,email,{$this->user?->id}",
             'password' => 'required|confirmed',
             'is_admin' => 'required|bool'
         ];
