@@ -25,7 +25,7 @@ class FeedBackRequest extends Model
 
     public function performanceReview()
     {
-        return $this->belongsTo('App\Models\User', 'performance_reviews_id');
+        return $this->belongsTo('App\Models\User', 'performance_review_id');
     }
 
     public function reviewer()

@@ -26,6 +26,8 @@ Route::group(['prefix' => '/'], function () {
 
             Route::apiResource('feed-Back-requests', 'App\Http\Controllers\FeedBackRequestController');
 
+            Route::get('/user/feed-Back-requests/', 'App\Http\Controllers\FeedBackRequestController@userFeedBackRequests')->name('user.review');
+
             Route::group(['middleware' => ['admin.guard']], function () {
 
                 Route::apiResources([

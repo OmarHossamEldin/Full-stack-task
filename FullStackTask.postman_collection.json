@@ -35,20 +35,68 @@
 							]
 						},
 						"url": {
-							"raw": "{{baseURL}}logout",
+							"raw": "{{baseURL}}/logout",
 							"host": [
-								"{{baseURL}}logout"
+								"{{baseURL}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "index",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/users",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "register",
+					"name": "create",
 					"request": {
-						"auth": {
-							"type": "noauth"
-						},
 						"method": "POST",
 						"header": [
 							{
@@ -67,7 +115,84 @@
 								},
 								{
 									"key": "email",
-									"value": "okandil273@gmail.com",
+									"value": "test@test.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456789",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "123456789",
+									"type": "text"
+								},
+								{
+									"key": "is_admin",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/users",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/users/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "omar hossam eldin",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "testing@gmail.com",
 									"type": "text"
 								},
 								{
@@ -79,17 +204,475 @@
 									"key": "password_confirmation",
 									"value": "P@ssw0rd@softwareEngineer",
 									"type": "text"
+								},
+								{
+									"key": "is_admin",
+									"value": "1",
+									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{baseURL}}register",
+							"raw": "{{baseURL}}/users/1",
 							"host": [
-								"{{baseURL}}register"
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"1"
 							]
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/users/3",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Review",
+			"item": [
+				{
+					"name": "index",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/performance-reviews",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"performance-reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "reviewer_id",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "reviewee_id",
+									"value": "6",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/performance-reviews",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"performance-reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/performance-reviews/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"performance-reviews",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"review\": {\r\n        \"performance\": \"mid level\",\r\n        \"speed\": \"50 word per min\",\r\n        \"typing\": \"with six langs\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/performance-reviews/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"performance-reviews",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/performance-reviews/2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"performance-reviews",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "FeedBackReview",
+			"item": [
+				{
+					"name": "index",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/feed-Back-requests",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"feed-Back-requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "performance_reviewer_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "reviewer_id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/feed-Back-requests",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"feed-Back-requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/feed-Back-requests/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"feed-Back-requests",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "omar hossam eldin",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "testing@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "P@ssw0rd@softwareEngineer",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "P@ssw0rd@softwareEngineer",
+									"type": "text"
+								},
+								{
+									"key": "is_admin",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/feed-Back-requests/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"feed-Back-requests",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/feed-Back-requests/3",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"feed-Back-requests",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "UserFeedBackReview",
+			"item": [
+				{
+					"name": "index",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/user/feed-Back-requests/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"user",
+								"feed-Back-requests",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -115,20 +698,23 @@
 							"formdata": [
 								{
 									"key": "email",
-									"value": "okandil273@gmail.com",
+									"value": "admin@admin.com",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "P@ssw0rd@softwareEngineer",
+									"value": "12345678",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{baseURL}}login",
+							"raw": "{{baseURL}}/login",
 							"host": [
-								"{{baseURL}}login"
+								"{{baseURL}}"
+							],
+							"path": [
+								"login"
 							]
 						}
 					},
@@ -161,7 +747,14 @@
 		}
 	],
 	"auth": {
-		"type": "bearer"
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "4sOQGPj3OgbMgIUJNpyMFYdKe1fZGmyGLl7FiarxsQVQ9BFsfCozCyNgtdic",
+				"type": "string"
+			}
+		]
 	},
 	"event": [
 		{
@@ -186,7 +779,7 @@
 	"variable": [
 		{
 			"key": "baseURL",
-			"value": "127.0.0.1:8000/api/"
+			"value": "127.0.0.1:8000/api"
 		}
 	]
 }

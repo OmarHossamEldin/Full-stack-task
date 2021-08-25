@@ -54,4 +54,10 @@ class UserRepository implements Crud
         $user->delete();
         return true;
     }
+
+    public function userFeedBackRequest(): object
+    {
+        $user = auth('api')->user()->load('feedback');
+        return $user;
+    }
 }

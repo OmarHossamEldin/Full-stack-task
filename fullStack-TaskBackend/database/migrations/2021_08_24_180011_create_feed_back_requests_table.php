@@ -14,7 +14,8 @@ class CreateFeedBackRequestsTable extends Migration
     public function up()
     {
         Schema::create('feed_back_requests', function (Blueprint $table) {
-            $table->foreignId('performance_reviews_id')->primary()->constrainted('performance_reviews');
+            $table->foreignId('performance_review_id')->constrainted('performance_reviews');
+            $table->primary('performance_reviews_id');
             $table->string('feedback')->nullable();
             $table->foreignId('reviewer_id')->constrainted('users');
             $table->timestamps();

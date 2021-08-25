@@ -26,8 +26,6 @@ class FeedBackRequestRepository implements Crud
      */
     public function create(array $validatedData): object
     {
-        $user = auth('api')->user();
-        $validatedData['user_id'] = $user->id;
         $feedBackRequest = FeedBackRequest::create($validatedData);
         return $feedBackRequest;
     }

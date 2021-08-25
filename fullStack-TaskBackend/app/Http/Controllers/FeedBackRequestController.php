@@ -3,72 +3,80 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\UserRepository;
+use App\Repositories\FeedBackRequestRepository;
+use App\Models\FeedBackRequest as FeedBack;
+use App\Http\Requests\FeedBackRequest;
 use App\Helpers\JsonResponse;
-use App\Models\FeedBackRequest;
 use Lang;
 
 class FeedBackRequestController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @param UserRepository $userRepository
+     * @param FeedBackRequestRepository $feedBackRequestRepository
      * @return JsonResponse
      */
-    public function index(UserRepository $userRepository)
+    public function index(FeedBackRequestRepository $feedBackRequestRepository)
     {
-        $feedBackRequests = $userRepository->list();
+        $feedBackRequests = $feedBackRequestRepository->list();
         return JsonResponse::response(data: ['feedBackRequests' => $feedBackRequests], statusCode: 200);
     }
 
     /**
      *  create user
      * 
-     * @param UserRequest $request
-     * @param UserRepository $userRepository
+     * @param FeedBackRequest $request
+     * @param FeedBackRequestRepository $feedBackRequests
      * @return JsonResponse
      */
-    public function store(UserRequest $request, UserRepository $userRepository)
+    public function store(FeedBackRequest $request, UserRepository $feedBackRequests)
     {
-        $feedBackRequest = $userRepository->create($request->validated());
-        return JsonResponse::response(message: Lang::get('db.success'), data: ['feedBackRequest' => $feedBackRequest], statusCode: 201);
+        $feedBackRequest = $feedBackRequests->create($request->validated());
+        return JsonResponse::response(message: Lang::get('db.success'), data: ['feedBackRequest' => $feedBackRequest], statusCode: 206);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  FeedBackRequest  $user
+     * @param  FeedBack  $feedBack
      * @return JsonResponse
      */
-    public function show(FeedBackRequest $feedBackRequest)
+    public function show(FeedBack $feedBack)
     {
-        return JsonResponse::response(data: ['feedBackRequest' => $feedBackRequest], statusCode: 200);
+        return JsonResponse::response(data: ['feedBack' => $feedBack], statusCode: 200);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  UserRequest $request
-     * @param  FeedBackRequest $user
-     * @param  UserRepository $userRepository
+     * @param  FeedBackRequest $request
+     * @param  FeedBack $feedBack
+     * @param  FeedBackRequestRepository $feedBackRequests
      * @return JsonResponse
      */
-    public function update(UserRequest  $request, FeedBackRequest $feedBackRequest, UserRepository $userRepository)
+    public function update(FeedBackRequest $request, FeedBack $feedBack, FeedBackRequestRepository $feedBackRequests)
     {
-        $feedBackRequest = $userRepository->update($request->validated(), $feedBackRequest);
+        $feedBack = $feedBackRequests->update($feedBack, $request->validated());
 
-        return JsonResponse::response(message: Lang::get('db.success'), data: ['feedBackRequest' => $feedBackRequest], statusCode: 206);
+        return JsonResponse::response(message: Lang::get('db.success'), data: ['feedBack' => $feedBack], statusCode: 206);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  FeedBackRequest $user
-     * @param  UserRepository $userRepository
+     * @param  FeedBack $feedBack
+     * @param  FeedBackRequestRepository $feedBackRequests
      * @return JsonResponse
      */
-    public function destroy(FeedBackRequest $feedBackRequest, UserRepository $userRepository)
+    public function destroy(FeedBack $feedBack, FeedBackRequestRepository $feedBackRequestRepository)
     {
-        $result = $userRepository->delete($feedBackRequest);
+        $result = $feedBackRequestRepository->delete($feedBack);
         return $result ? JsonResponse::response(message: Lang::get('db.success'), data: [], statusCode: 200) : 'error';
+    }
+
+    public function userFeedBackRequests(UserRepository $userRepository)
+    {
+        $user = $userRepository->userFeedBackRequest();
+        return JsonResponse::response(message: Lang::get('db.success'), data: ['user' => $user], statusCode: 200);
     }
 }
