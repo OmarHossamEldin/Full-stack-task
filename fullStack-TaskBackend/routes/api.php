@@ -24,11 +24,13 @@ Route::group(['prefix' => '/'], function () {
 
             Route::post('logout', 'App\Http\Controllers\Auth\LogoutController@logout')->name('user.logout');
 
+            Route::apiResource('feed-Back-requests', 'App\Http\Controllers\FeedBackRequestController');
+
             Route::group(['middleware' => ['admin.guard']], function () {
 
                 Route::apiResources([
                     'users' => 'App\Http\Controllers\UserController',
-                    'feed-back-requests' => 'App\Http\Controllers\FeedBackRequestController'
+                    'performance-reviews' => 'App\Http\Controllers\PerformanceReviewController'
                 ]);
             });
         });

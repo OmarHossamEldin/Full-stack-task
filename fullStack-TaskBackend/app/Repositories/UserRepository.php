@@ -26,7 +26,6 @@ class UserRepository implements Crud
      */
     public function create(array $validatedData): object
     {
-        $user = auth('api')->user();
         $user = User::create($validatedData);
         return $user;
     }

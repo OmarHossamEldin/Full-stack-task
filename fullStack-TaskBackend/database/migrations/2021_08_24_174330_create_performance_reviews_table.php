@@ -17,7 +17,7 @@ class CreatePerformanceReviewsTable extends Migration
             $table->id();
             $table->foreignId('reviewer_id')->constrainted('users');
             $table->foreignId('reviewee_id')->constrainted('users');
-            $table->json('review');
+            $table->json('review')->nullable();
             $table->timestamps();
         });
     }

@@ -26,12 +26,15 @@ class PerformanceReviewRepository implements Crud
      */
     public function create(array $validatedData): object
     {
-        $user = auth('api')->user();
-        $validatedData['user_id'] = $user->id;
         $performanceReview = PerformanceReview::create($validatedData);
         return $performanceReview;
     }
-
+    
+    public function showReviewer(object $review): object
+    {
+        $review->load(['reviewer:id,name', 'reviewee:id,name']);
+        return $review;
+    }
     /**
      * Updates the resource in the database
      *

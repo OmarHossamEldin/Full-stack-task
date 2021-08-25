@@ -2,73 +2,76 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\UserRepository;
+use App\Repositories\PerformanceReviewRepository;
 use App\Helpers\JsonResponse;
-use App\Models\User;
+use App\Http\Requests\ReviewRequest;
+use App\Models\PerformanceReview;
 use Lang;
 
 class PerformanceReviewController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @param UserRepository $userRepository
+     * @param PerformanceReviewRepository $performanceReviewRepository
      * @return JsonResponse
      */
-    public function index(UserRepository $userRepository)
+    public function index(PerformanceReviewRepository $performanceReviewRepository)
     {
-        $users = $userRepository->list();
-        return JsonResponse::response(data: ['users' => $users], statusCode: 200);
+        $reviews = $performanceReviewRepository->list();
+        return JsonResponse::response(data: ['reviews' => $reviews], statusCode: 200);
     }
 
     /**
      *  create user
      * 
-     * @param UserRequest $request
-     * @param UserRepository $userRepository
+     * @param ReviewRequest $request
+     * @param PerformanceReviewRepository $performanceReviewRepository
      * @return JsonResponse
      */
-    public function store(UserRequest $request, UserRepository $userRepository)
+    public function store(ReviewRequest $request, PerformanceReviewRepository $performanceReviewRepository)
     {
-        $user = $userRepository->create($request->validated());
-        return JsonResponse::response(message: Lang::get('db.success'), data: ['user' => $user], statusCode: 201);
+        $review = $performanceReviewRepository->create($request->validated());
+        return JsonResponse::response(message: Lang::get('db.success'), data: ['review' => $review], statusCode: 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  User  $user
+     * @param  PerformanceReview  $performanceReview
+     * @param PerformanceReviewRepository $performanceReviewRepository
      * @return JsonResponse
      */
-    public function show(User $user)
+    public function show(PerformanceReview $performanceReview, PerformanceReviewRepository $performanceReviewRepository)
     {
-        return JsonResponse::response(data: ['user' => $user], statusCode: 200);
+        $review = $performanceReviewRepository->showReviewer($performanceReview);
+        return JsonResponse::response(data: ['review' => $review], statusCode: 200);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  UserRequest $request
-     * @param  User $user
-     * @param  UserRepository $userRepository
+     * @param  ReviewRequest $request
+     * @param  PerformanceReview $performanceReview
+     * @param  PerformanceReviewRepository $performanceReviewRepository
      * @return JsonResponse
      */
-    public function update(UserRequest  $request, User $user, UserRepository $userRepository)
+    public function update(ReviewRequest  $request, PerformanceReview $performanceReview, PerformanceReviewRepository $performanceReviewRepository)
     {
-        $user = $userRepository->update($request->validated(), $user);
+        $performanceReview = $performanceReviewRepository->update($performanceReview, $request->validated());
 
-        return JsonResponse::response(message: Lang::get('db.success'), data: ['user' => $user], statusCode: 206);
+        return JsonResponse::response(message: Lang::get('db.success'), data: ['performanceReview' => $performanceReview], statusCode: 206);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  User $user
-     * @param  UserRepository $userRepository
+     * @param  PerformanceReview $performanceReview
+     * @param  PerformanceReviewRepository $performanceReviewRepository
      * @return JsonResponse
      */
-    public function destroy(User $user, UserRepository $userRepository)
+    public function destroy(PerformanceReview $performanceReview, PerformanceReviewRepository $performanceReviewRepository)
     {
-        $result = $userRepository->delete($user);
+        $result = $performanceReviewRepository->delete($performanceReview);
         return $result ? JsonResponse::response(message: Lang::get('db.success'), data: [], statusCode: 200) : 'error';
     }
 }
