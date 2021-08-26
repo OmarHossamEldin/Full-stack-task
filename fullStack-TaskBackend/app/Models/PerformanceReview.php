@@ -25,4 +25,9 @@ class PerformanceReview extends Model
     {
         return $this->belongsTo('App\Models\User', 'reviewee_id');
     }
+
+    public function feedBack()
+    {
+        return $this->hasOne('App\Models\FeedBackRequest', 'performance_review_id');
+    }
 }

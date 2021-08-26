@@ -24,7 +24,7 @@ class FeedBackRequest extends FormRequest
     private function onAssign()
     {
         return [
-            'performance_review_id' => 'required|exists:App\Models\PerformanceReview,id',
+            'performance_review_id' => 'required|unique:feed_back_requests,performance_review_id|exists:App\Models\PerformanceReview,id',
             'reviewer_id' => 'required|exists:App\Models\User,id'
         ];
     }

@@ -57,7 +57,7 @@ class UserRepository implements Crud
 
     public function userFeedBackRequest(): object
     {
-        $user = auth('api')->user()->load('feedback');
+        $user = auth('api')->user()->load('feedbacks');
         return $user;
     }
 }

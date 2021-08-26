@@ -53,7 +53,7 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\FeedBackRequest', 'reviewee_id');
     }
 
-    public function feedback()
+    public function feedbacks()
     {
         return $this->hasMany('App\Models\FeedBackRequest', 'reviewer_id');
     }

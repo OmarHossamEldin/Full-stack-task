@@ -21,11 +21,11 @@ class FeedBackRequest extends Model
      *
      * @var string
      */
-    protected $primary = 'performance_reviews_id';
+    protected $primaryKey = 'performance_review_id';
 
     public function performanceReview()
     {
-        return $this->belongsTo('App\Models\User', 'performance_review_id');
+        return $this->belongsTo('App\Models\PerformanceReview', 'performance_review_id');
     }
 
     public function reviewer()

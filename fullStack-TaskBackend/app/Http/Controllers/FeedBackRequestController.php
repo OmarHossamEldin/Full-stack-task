@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Repositories\UserRepository;
 use App\Repositories\FeedBackRequestRepository;
-use App\Models\FeedBackRequest as FeedBack;
-use App\Http\Requests\FeedBackRequest;
+use App\Http\Requests\FeedBackRequest as FeedBack;
+use App\Models\FeedBackRequest;
 use App\Helpers\JsonResponse;
 use Lang;
 
@@ -25,52 +25,55 @@ class FeedBackRequestController extends Controller
     /**
      *  create user
      * 
-     * @param FeedBackRequest $request
+     * @param FeedBack $request
      * @param FeedBackRequestRepository $feedBackRequests
      * @return JsonResponse
      */
-    public function store(FeedBackRequest $request, UserRepository $feedBackRequests)
+    public function store(FeedBack $request, FeedBackRequestRepository $feedBackRequestRepository)
     {
-        $feedBackRequest = $feedBackRequests->create($request->validated());
-        return JsonResponse::response(message: Lang::get('db.success'), data: ['feedBackRequest' => $feedBackRequest], statusCode: 206);
+        $feedBackRequest = $feedBackRequestRepository->create($request->validated());
+        return JsonResponse::response(message: Lang::get('db.success'), data: ['feedBackRequest' => $feedBackRequest], statusCode: 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  FeedBack  $feedBack
+     * @param  int  $feedBackRequest
      * @return JsonResponse
      */
-    public function show(FeedBack $feedBack)
+    public function show(int $feedBackRequest)
     {
-        return JsonResponse::response(data: ['feedBack' => $feedBack], statusCode: 200);
+        $feedBackRequest = FeedBackRequest::wherePerformanceReviewId($feedBackRequest)->firstOrFail();
+        return JsonResponse::response(data: ['feedBackRequest' => $feedBackRequest], statusCode: 200);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  FeedBackRequest $request
-     * @param  FeedBack $feedBack
-     * @param  FeedBackRequestRepository $feedBackRequests
+     * @param  int $request
+     * @param  FeedBackRequest $feedBack
+     * @param  FeedBackRequestRepository $feedBackRequestRepository
      * @return JsonResponse
      */
-    public function update(FeedBackRequest $request, FeedBack $feedBack, FeedBackRequestRepository $feedBackRequests)
+    public function update(int $request, FeedBackRequest $feedBackRequest, FeedBackRequestRepository $feedBackRequestRepository)
     {
-        $feedBack = $feedBackRequests->update($feedBack, $request->validated());
+        $feedBackRequest = FeedBackRequest::where('performance_review_id',$feedBackRequest)->firstOrFail();
+        $feedBackRequest = $feedBackRequestRepository->update($feedBackRequest, $request->validated());
 
-        return JsonResponse::response(message: Lang::get('db.success'), data: ['feedBack' => $feedBack], statusCode: 206);
+        return JsonResponse::response(message: Lang::get('db.success'), data: ['feedBackRequest' => $feedBackRequest], statusCode: 206);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  FeedBack $feedBack
+     * @param  int $feedBackRequest
      * @param  FeedBackRequestRepository $feedBackRequests
      * @return JsonResponse
      */
-    public function destroy(FeedBack $feedBack, FeedBackRequestRepository $feedBackRequestRepository)
+    public function destroy(int $feedBackRequest, FeedBackRequestRepository $feedBackRequestRepository)
     {
-        $result = $feedBackRequestRepository->delete($feedBack);
+        $feedBackRequest = FeedBackRequest::where('performance_review_id',$feedBackRequest)->firstOrFail();
+        $result = $feedBackRequestRepository->delete($feedBackRequest);
         return $result ? JsonResponse::response(message: Lang::get('db.success'), data: [], statusCode: 200) : 'error';
     }
 

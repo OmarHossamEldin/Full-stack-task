@@ -14,7 +14,7 @@ class FeedBackRequestRepository implements Crud
      */
     public function list(): array
     {
-        $feedBackRequest = FeedBackRequest::all()->toArray();
+        $feedBackRequest = FeedBackRequest::with('reviewer')->get()->toArray();
         return $feedBackRequest;
     }
 
@@ -26,7 +26,7 @@ class FeedBackRequestRepository implements Crud
      */
     public function create(array $validatedData): object
     {
-        $feedBackRequest = FeedBackRequest::create($validatedData);
+        $feedBackRequest =  FeedBackRequest::create($validatedData);
         return $feedBackRequest;
     }
 
