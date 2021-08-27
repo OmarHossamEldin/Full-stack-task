@@ -69,7 +69,7 @@ export default {
         login(email, password){
             this.authenticateUser({ email, password }).then((response) => {
                 this.$notifyAlert(response);
-                if(response.status === 200) 
+                if(response.status === 201) 
                     this.$router.push({name:'dashboard'});
             });
         },
