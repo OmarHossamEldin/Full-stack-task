@@ -5,52 +5,7 @@
       <!-- Header     -->
       <PageHeader v-on:clickMenu="drawer = !drawer" />
       <!-- (Optional) A Drawer; Side NavBar -->
-      <q-drawer
-        v-model="drawer"
-        show-if-above
-        bordered
-        :width="200"
-        :breakpoint="500"
-        content-class="bg-white"
-      >
-        <q-scroll-area class="fit">
-          <q-list>
-            <q-item to="dashboard" v-ripple>
-              <q-item-section avatar>
-                <q-icon name="dashboard" />
-              </q-item-section>
-              <q-item-section>
-                {{ $t("dashboard.dashboard") }}
-              </q-item-section>
-            </q-item>
-            <q-separator />
-            <q-expansion-item
-              v-for="(mainNavigation, id) in mainNavigations"
-              :key="id"
-              :icon="mainNavigation.icon"
-              :label="mainNavigation.label"
-              header-class="text-primary"
-            >
-              <q-list padding class="menu-list">
-                <q-item
-                  v-for="(
-                    subNavigation, subid
-                  ) in mainNavigation.subNavigations"
-                  :key="subid"
-                  :to="{name:subNavigation.to}"
-                >
-                  <q-item-section avatar>
-                    <q-icon :name="subNavigation.icon" />
-                  </q-item-section>
-                  <q-item-section>
-                    {{ subNavigation.label }}
-                  </q-item-section>
-                </q-item>
-              </q-list>
-            </q-expansion-item>
-          </q-list>
-        </q-scroll-area>
-      </q-drawer>
+      <SideBar :drawer="drawer" :mainNavigations="mainNavigations" />
 
       <q-page-container>
         <!-- This is where pages get injected -->
@@ -64,11 +19,13 @@
 
 <script>
 import PageHeader from "components/PageHeader.vue";
+import SideBar from "components/SideBar.vue";
 import PageFooter from "components/PageFooter.vue";
 export default {
-  name: "adminPanel",
+  name: "fullStackPanel",
   components: {
     PageHeader,
+    SideBar,
     PageFooter,
   },
   data() {

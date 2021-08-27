@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 // loading modules
 import Auth from './modules/Auth';
 import Category from './modules/Category';
-import Admin from './modules/Admin';
+import User from './modules/User';
 
 Vue.use(Vuex)
 
@@ -22,7 +22,7 @@ export default function (/* { ssrContext } */) {
     modules: {
       Auth,
       Category,
-      Admin
+      User
     },
     // enable strict mode (adds overhead!)
     // for dev mode only

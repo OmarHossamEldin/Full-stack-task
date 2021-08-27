@@ -6,7 +6,7 @@
   <q-page class="q-pa-md">
     <!-- table -->
     <q-table
-      :data="admins"
+      :data="users"
       :columns="columns"
       :filter="filter"
       :rows-per-page-options="[20, 30, 50, 0]"
@@ -51,15 +51,15 @@
 import { mapGetters, mapActions } from 'vuex';
 import BreadCrumbs from 'components/BreadCrumbs';
 export default {
-  name: "Admins",
+  name: "Users",
   components:{
     BreadCrumbs
   },
   computed:{
-    ...mapGetters({admins:'allAdmins'})
+    ...mapGetters({users:'allUsers'})
   },
   methods:{
-    ...mapActions(['getAdmins', 'deleteAdmin']),
+    ...mapActions(['getUsers', 'deleteUser']),
     deleteThis(thisAdmin){
       this.deleteThisAdmin(thisAdmin);
     },
@@ -72,7 +72,7 @@ export default {
   },
   data() {
     return {
-      title: this.$t('table.admins.title'),
+      title: this.$t('table.users.title'),
       filter: "",
       prompt: false,
       dialogHeader: this.$t('headers.create'),
@@ -80,15 +80,15 @@ export default {
         {
           name: "#",
           required: true,
-          label: this.$t("table.admins.headers.id"),
+          label: this.$t("table.users.headers.id"),
           align: "left",
-          field: (row) => (this.admins.indexOf(row) +1 ),
+          field: (row) => (this.users.indexOf(row) +1 ),
           sortable: true,
         },
         {
           name: "name",
           required: true,
-          label: this.$t("table.admins.headers.name"),
+          label: this.$t("table.users.headers.name"),
           align: "center",
           field: (row) => row.person.firstName,
           sortable: true,
@@ -96,7 +96,7 @@ export default {
         {
           name: "roles",
           required: true,
-          label: this.$t("table.admins.headers.roles"),
+          label: this.$t("table.users.headers.roles"),
           align: "center",
           field: (row) => (row.role ? row.role.map((index) => index.name):""),
           sortable: true,
@@ -104,12 +104,12 @@ export default {
         {
           name: "active",
           align: "center",
-          label: this.$t("table.admins.headers.active")
+          label: this.$t("table.users.headers.active")
         },
         {
           name: "actions",
           align: "center",
-          label: this.$t("table.admins.headers.actions")
+          label: this.$t("table.users.headers.actions")
         }
       ]
     };

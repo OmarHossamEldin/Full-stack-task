@@ -14,7 +14,8 @@ export default {
     name: "BreadCrumbs",
     props:{
       'title': {
-        type: String
+        type: String,
+        required: true
       }
     }
 }

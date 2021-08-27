@@ -104,10 +104,22 @@ export default {
     title: 'FullStack Task'
   },
   mainNavigation : {
-    category: {
-      label: "Category", 
+    performanceReview: {
+      label: "PerformanceReview", 
       subNavigation:{
-          index: "Categories"
+          index: "performanceReviews"
+      }
+    },
+    feedBackRequest: {
+      label: "FeedBackRequest", 
+      subNavigation:{
+          index: "FeedBackRequests"
+      }
+    },
+    user: {
+      label: "User", 
+      subNavigation:{
+          index: "Users"
       }
     }
   },

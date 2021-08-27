@@ -109,12 +109,24 @@ export default {
         title: "علي فرص"
     },
     mainNavigation : {
-        category: {
-          label: "قسم", 
-          subNavigation:{
-              index: "جميع الاقسام"
+        performanceReview: {
+            label: "تقيم كفائه", 
+            subNavigation:{
+                index: "ـقيمات الكفائه"
+            }
+          },
+          feedBackRequest: {
+            label: "طلب الملاحظه", 
+            subNavigation:{
+                index: "طلب الملاحظات"
+            }
+          },
+          user: {
+            label: "مستخدم", 
+            subNavigation:{
+                index: "المستخدمين"
+            }
           }
-        }
     },
     headers:{
       create: 'إنشاء',
