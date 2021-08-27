@@ -11,7 +11,7 @@
                     <q-item-label class="self-center text-center">
                       <q-avatar>
                       <img src="https://cdn.quasar.dev/img/boy-avatar.png"></q-avatar><br>
-                      <small>{{user.firstName}}</small> 
+                      <small>{{user.name}}</small> 
                     </q-item-label>
                   </q-item-section>
                 </q-item>
@@ -41,9 +41,10 @@ export default {
     methods:{
       ...mapActions(['logoutAthenticatedUser']),
       logout(){
-        this.logoutAthenticatedUser().then((response) =>{
-            if(response.status === 200)
-                this.$router.push({name:'login'});
+        this.logoutAthenticatedUser().then((response) => {
+            this.$notifyAlert(response);
+            if(response.status === 200) 
+            this.$router.push({name:'login'});
         });
       }
     }

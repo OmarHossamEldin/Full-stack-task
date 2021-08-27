@@ -27,13 +27,13 @@ const actions = {
             return error.response;   
         }
     },
-    async logoutAthenticatedUser(){
+    async logoutAthenticatedUser({ commit }){
         try {
             const response = await axios.post('logout');
             Vue.prototype.$axios.defaults.headers.common.Authorization = null;
             localStorage.removeItem('user');
             localStorage.removeItem('token');
-            commit('logout', null);
+            commit('logout', response.data);
             return response;
         } catch (error) {
             return error.response;   

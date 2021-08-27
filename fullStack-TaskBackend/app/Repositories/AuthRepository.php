@@ -29,8 +29,9 @@ class AuthRepository
      * @param object $user
      * @return bool
      */
-    public function signOut(object $user): bool
+    public function signOut(): bool
     {
+        $user = auth('api')->user();
         $user->update([
             'api_token' => null
         ]);
