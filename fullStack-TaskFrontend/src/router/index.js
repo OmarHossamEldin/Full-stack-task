@@ -26,7 +26,7 @@ export default function (/* { store, ssrContext } */) {
     base: process.env.VUE_ROUTER_BASE
   })
   Router.beforeEach((to, from, next) => {
-    let status = !!localStorage.getItem('status')
+    let status = !!localStorage.getItem('token')
     if (to.name !== 'login' && !status) next({ name: 'login' })
     else next()
   })

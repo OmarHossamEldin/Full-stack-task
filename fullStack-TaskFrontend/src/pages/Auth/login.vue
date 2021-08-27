@@ -74,8 +74,7 @@ export default {
             });
         },
         autoLogin(){
-            let status = localStorage.getItem('status');
-            if(status === 'Authenticated')
+            if(!!localStorage.getItem('token'))
                 this.$router.push({name:'dashboard'});
         },
         setLocal(){
