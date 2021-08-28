@@ -36,7 +36,7 @@
       </template>
       <template v-slot:body-cell-actions="props">
         <q-td :props="props" >
-          <q-btn size="sm" color="info" :label="$t('btns.edit')" @click="deleteThis(props.row)" />
+          <q-btn size="sm" color="info" :label="$t('btns.edit')" @click="openPrompt(props.row)" />
           &nbsp;
           <q-btn size="sm" color="red" :label="$t('btns.delete')" @click="deleteThis(props.row)" />
         </q-td>
@@ -94,9 +94,9 @@ export default {
      ...mapActions(['getUsers', 'storeUser', 'updateUser', 'activeDeactiveUser', 'deleteUser']),
     save(user){
       if(user.id) {
-        // this.updateUser(user).then((response) => {
-        //   this.$notifyAlert(response);
-        // });
+        this.updateUser(user).then((response) => {
+          this.$notifyAlert(response);
+        });
       }
       else {
         this.storeUser(user).then((response) => {
