@@ -35,6 +35,7 @@ export default {
         {
           icon: "category",
           label: this.$t("mainNavigation.performanceReview.label"),
+          requiedAdmin: false,
           subNavigations: [
             {
               to: "performanceReview.index",
@@ -46,6 +47,7 @@ export default {
         {
           icon: "feedback",
           label: this.$t("mainNavigation.feedBackRequest.label"),
+          requiedAdmin: false,
           subNavigations: [
             {
               to: "feedBackRequest.index",
@@ -57,6 +59,7 @@ export default {
         {
           icon: "lock",
           label: this.$t("mainNavigation.user.label"),
+          requiedAdmin: true,
           subNavigations: [
             {
               to: "user.index",

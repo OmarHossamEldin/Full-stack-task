@@ -13,7 +13,7 @@
       row-key="id"
     >
       <template v-slot:top>
-        <q-btn color="primary" :to="{name:'admin.create'}" :label="$t('btns.create')"  />
+        <q-btn color="primary" @click="openPrompt" :label="$t('btns.create')"  />
         <q-space />
         <q-input
           debounce="300"
@@ -42,7 +42,29 @@
         </q-td>
       </template>
     </q-table>
-     
+      <!-- dialog create - edit -->
+      <q-dialog v-model="prompt" position="top" >
+        <q-card class="column dialogForm">
+          <q-form @submit="save(user)">
+            <q-card-section class="col-2 row">
+              <div class="text-h4">{{dialogHeader}}</div>
+              <q-space />
+              <q-btn icon="close" flat round dense v-close-popup />
+            </q-card-section>
+            <q-card-section class="col-2" >
+              <q-input dense filled outlined v-model="user.name" :placeholder="$t('user.name')" />
+            </q-card-section>
+            <q-card-section class="col-2">
+              <q-input dense filled v-model="user.email" :placeholder="$t('user.email')" />
+            </q-card-section>
+            
+            <q-card-actions  class="col-1 text-primary">
+              <q-btn flat :label="$t('btns.cancel')" v-close-popup />
+              <q-btn flat :label="$t('btns.save')" type="submit"  v-close-popup />
+            </q-card-actions>
+          </q-form>
+        </q-card>
+      </q-dialog>
     </q-page>
   </div>
 </template>
@@ -61,25 +83,69 @@ export default {
     })
   },
   methods:{
-    ...mapActions(['getUsers', 'deleteUser']),
-    deleteThis(thisAdmin){
-      this.deleteThisAdmin(thisAdmin);
+     ...mapActions(['getUsers', 'storeUser', 'updateUser', 'activeDeactiveUser', 'deleteThisUser']),
+    save(user){
+      if(user.id) {
+        this.updateUser(user).then((response) => {
+          this.$notifyAlert(response);
+        });
+      }
+      else {
+        this.storeUser(user).then((response) => {
+          this.$notifyAlert(response);
+        });
+      }  
+      this.user = this.defaultUser;
     },
-    changeStatus(admin){
-      // this.activeDeactiveAdmin(admin);
+    deleteThis(thisUser){
+      this.deleteThisUser(thisUser);
+    },
+    changeStatus(user){
+      this.activeDeactiveUser(user);
+    },
+    openPrompt(row){
+      if(row.id) {
+        this.dialogHeader = this.$t('btns.edit');
+        this.user = {
+          id: row.id,
+          name: row.name,
+          email: row.email,
+          password: '',
+          password_confirmation: '',
+          is_admin: row.is_admin
+        };
+      }
+      else{
+        this.dialogHeader = this.$t('btns.create');
+        this.user = this.defaultUser;
+      }
+      this.prompt = !this.prompt;
     }
   },
   created(){
     this.getUsers();
-    console.log(typeof(this.allUsers));
     
   },
   data() {
     return {
       title: this.$t('mainNavigation.user.subNavigation.index'),
       filter: "",
+       user:{
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        is_admin: ''
+      },
+      defaultUser:{
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        is_admin: ''
+      },
       prompt: false,
-      dialogHeader: this.$t('headers.create'),
+      dialogHeader: this.$t('btns.create'),
       columns: [
         {
           name: "#",

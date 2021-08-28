@@ -48,12 +48,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
     name:'SideBar',
     watch: {
         drawer: function () {
             this.open = !this.open
         }
+    },
+    computed: {
+      ...mapGetters(['getRole'])
     },
     props: {
         drawer: {
