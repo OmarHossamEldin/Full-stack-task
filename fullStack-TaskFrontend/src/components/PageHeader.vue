@@ -15,11 +15,6 @@
                     </q-item-label>
                   </q-item-section>
                 </q-item>
-                <q-item :to="{name:'profile'}" >
-                  <q-item-section>
-                    <q-item-label>Profile</q-item-label>
-                  </q-item-section>
-                </q-item>
                 <q-item @click="logout" clickable>
                   <q-item-section>
                     <q-item-label>Logout</q-item-label>

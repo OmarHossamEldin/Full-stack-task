@@ -30,13 +30,13 @@
       <template v-slot:body-cell-active="props">
         <q-td :props="props">
           <q-btn size="sm"
-            :color="props.row.active ? 'warning' : 'green'" round icon="toggle_off"
+            :color="props.row.is_admin ?  'green':'warning'" round icon="toggle_off"
             @click="changeStatus(props.row)" /> 
         </q-td>
       </template>
       <template v-slot:body-cell-actions="props">
         <q-td :props="props" >
-          <q-btn size="sm" color="info" :label="$t('btns.edit')"  />
+          <q-btn size="sm" color="info" :label="$t('btns.edit')" @click="deleteThis(props.row)" />
           &nbsp;
           <q-btn size="sm" color="red" :label="$t('btns.delete')" @click="deleteThis(props.row)" />
         </q-td>
@@ -52,19 +52,19 @@
               <q-btn icon="close" flat round dense v-close-popup />
             </q-card-section>
             <q-card-section class="col-2" >
-              <q-input dense filled outlined v-model="user.name" :placeholder="$t('user.name')" />
+              <q-input dense filled outlined v-model="user.name" :placeholder="$t('tables.headers.user.name')" />
             </q-card-section>
             <q-card-section class="col-2">
-              <q-input dense filled v-model="user.email" :placeholder="$t('user.email')" />
+              <q-input dense filled v-model="user.email" :placeholder="$t('tables.headers.user.email')" />
             </q-card-section>
             <q-card-section class="col-2">
-              <q-input dense filled v-model="user.password" :placeholder="$t('user.email')" />
+              <q-input dense filled v-model="user.password" :placeholder="$t('tables.headers.user.password')" />
             </q-card-section>
             <q-card-section class="col-2">
-              <q-input dense filled v-model="user.password_confirmation" :placeholder="$t('user.email')" />
+              <q-input dense filled v-model="user.password_confirmation" :placeholder="$t('tables.headers.user.passwordConfirmation')" />
             </q-card-section>
             <q-card-section class="col-2">
-              <q-toggle v-model="user.is_admin" color="green"  :label="$t('user.email')"/>
+              <q-toggle v-model="user.is_admin" color="green"  :label="$t('tables.headers.user.admin')"/>
             </q-card-section>
             <q-card-actions  class="col-1 text-primary">
               <q-btn flat :label="$t('btns.cancel')" v-close-popup />
@@ -80,7 +80,6 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import BreadCrumbs from 'components/BreadCrumbs';
-import { ref } from 'vue';
 export default {
   name: "Users",
   components:{
@@ -92,12 +91,12 @@ export default {
     })
   },
   methods:{
-     ...mapActions(['getUsers', 'storeUser', 'updateUser', 'activeDeactiveUser', 'deleteThisUser']),
+     ...mapActions(['getUsers', 'storeUser', 'updateUser', 'activeDeactiveUser', 'deleteUser']),
     save(user){
       if(user.id) {
-        this.updateUser(user).then((response) => {
-          this.$notifyAlert(response);
-        });
+        // this.updateUser(user).then((response) => {
+        //   this.$notifyAlert(response);
+        // });
       }
       else {
         this.storeUser(user).then((response) => {
@@ -107,7 +106,7 @@ export default {
       this.user = this.defaultUser;
     },
     deleteThis(thisUser){
-      this.deleteThisUser(thisUser);
+      this.deleteUser(thisUser);
     },
     changeStatus(user){
       this.activeDeactiveUser(user);

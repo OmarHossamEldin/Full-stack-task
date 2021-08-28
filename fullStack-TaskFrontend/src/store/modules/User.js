@@ -20,7 +20,11 @@ const actions = {
     async storeUser({ commit }, data) {
         try {
             const response = await axios.post('users', {
-                data
+                name:data.name,
+                email:data.email,
+                password:data.password,
+                password_confirmation:data.password_confirmation,
+                is_admin:data.is_admin
             });
             commit('newUser', response.data);
             return response;
@@ -41,7 +45,8 @@ const actions = {
     },
     async deleteUser({ commit }, data) {
         try {
-            const response = await axios.delete(`users/${data}`);
+            console.log(data.id)
+            const response = await axios.delete(`users/${data.id}`);
             commit('deleteUser', response.data);
             return response;
         } catch (error) {
@@ -52,7 +57,7 @@ const actions = {
 
 const mutations = {
     fetchUsers: (state, data) => (state.users = data.users),
-    newUser: (state, data) => (state.users.push(data)),
+    newUser: (state, data) => (state.users.push(data.user)),
     deleteUsers:(state, data) =>(state.users = state.users.filter((user) => user.id !== data))
 };
 

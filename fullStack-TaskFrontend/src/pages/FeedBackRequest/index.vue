@@ -6,7 +6,7 @@
   <q-page class="q-pa-md">
     <!-- table -->
     <q-table
-      :data="categories"
+      :data="users"
       :columns="columns"
       :filter="filter"
       :rows-per-page-options="[20, 30, 50, 0]"
@@ -20,7 +20,7 @@
           color="primary"
           v-model="filter"
           dense
-          :placeholder="$t('table.search')"
+          :placeholder="$t('tables.search')"
         >
           <template v-slot:append>
             <q-icon name="search" />
@@ -36,7 +36,7 @@
       </template>
       <template v-slot:body-cell-actions="props">
         <q-td :props="props" >
-          <q-btn size="sm" color="info" :label="$t('btns.edit')" @click="openPrompt(props.row)"  />
+          <q-btn size="sm" color="info" :label="$t('btns.edit')"  />
           &nbsp;
           <q-btn size="sm" color="red" :label="$t('btns.delete')" @click="deleteThis(props.row)" />
         </q-td>
@@ -45,20 +45,26 @@
       <!-- dialog create - edit -->
       <q-dialog v-model="prompt" position="top" >
         <q-card class="column dialogForm">
-          <q-form @submit="save(category)">
+          <q-form @submit="save(user)">
             <q-card-section class="col-2 row">
               <div class="text-h4">{{dialogHeader}}</div>
               <q-space />
               <q-btn icon="close" flat round dense v-close-popup />
             </q-card-section>
             <q-card-section class="col-2" >
-              <q-input dense filled outlined v-model="category.enName" :placeholder="$t('category.enName')" />
+              <q-input dense filled outlined v-model="user.name" :placeholder="$t('tables.headers.user.name')" />
             </q-card-section>
             <q-card-section class="col-2">
-              <q-input dense filled v-model="category.arName" :placeholder="$t('category.arName')" />
+              <q-input dense filled v-model="user.email" :placeholder="$t('tables.headers.user.email')" />
             </q-card-section>
-            <q-card-section class="col-4">
-              <v-select :options="options" v-model='category.parent_id' :reduce="parent_id => parent_id.id" label="name" :placeholder="$t('category.parentCategory')"></v-select>
+            <q-card-section class="col-2">
+              <q-input dense filled v-model="user.password" :placeholder="$t('tables.headers.user.password')" />
+            </q-card-section>
+            <q-card-section class="col-2">
+              <q-input dense filled v-model="user.password_confirmation" :placeholder="$t('tables.headers.user.passwordConfirmation')" />
+            </q-card-section>
+            <q-card-section class="col-2">
+              <q-toggle v-model="user.is_admin" color="green"  :label="$t('tables.headers.user.admin')"/>
             </q-card-section>
             <q-card-actions  class="col-1 text-primary">
               <q-btn flat :label="$t('btns.cancel')" v-close-popup />
@@ -75,106 +81,114 @@
 import { mapGetters, mapActions } from 'vuex';
 import BreadCrumbs from 'components/BreadCrumbs';
 export default {
-  name: "Categories",
+  name: "Feedbacks",
   components:{
     BreadCrumbs
   },
   computed:{
     ...mapGetters({
-      categories:'allCategories',
-      options: 'allCategoryOptions'
+      users:'allUsers',
     })
   },
   methods:{
-    ...mapActions(['getCategories', 'storeCategory', 'updateCategory', 'activeDeactiveCategory', 'deleteThisCategory']),
-    save(category){
-      if(category.id) {
-        this.updateCategory(category).then((response) => {
+     ...mapActions(['getUsers', 'storeUser', 'updateUser', 'activeDeactiveUser', 'deleteUser']),
+    save(user){
+      if(user.id) {
+        this.updateUser(user).then((response) => {
           this.$notifyAlert(response);
         });
       }
       else {
-        this.storeCategory(category).then((response) => {
+        this.storeUser(user).then((response) => {
           this.$notifyAlert(response);
         });
       }  
-      this.category = this.defaultCategory;
+      this.user = this.defaultUser;
     },
-    deleteThis(thisCategory){
-      this.deleteThisCategory(thisCategory);
+    deleteThis(thisUser){
+      this.deleteUser(thisUser);
     },
-    changeStatus(category){
-      this.activeDeactiveCategory(category);
+    changeStatus(user){
+      this.activeDeactiveUser(user);
     },
     openPrompt(row){
       if(row.id) {
-        this.dialogHeader = this.$t('headers.edit');
-        this.category = {
+        this.dialogHeader = this.$t('btns.edit');
+        this.user = {
           id: row.id,
-          arName: row.name,
-          enName: row.name
+          name: row.name,
+          email: row.email,
+          password: '',
+          password_confirmation: '',
+          is_admin: row.is_admin
         };
       }
       else{
-        this.dialogHeader = this.$t('headers.create');
-        this.category = this.defaultCategory;
+        this.dialogHeader = this.$t('btns.create');
+        this.user = this.defaultUser;
       }
       this.prompt = !this.prompt;
     }
   },
   created(){
-    this.getCategories();
+    //this.getUsers();
+    
   },
   data() {
     return {
-      title: this.$t('table.categories.title'),
-      lang : this.$i18n.locale === 'en-us' ? this.$i18n.locale.substr(0, 2) : this.$i18n.locale,
+      title: this.$t('mainNavigation.user.subNavigation.index'),
       filter: "",
-      category:{
-        arName: "",
-        enName: "",
-        parent_id:"",
+       user:{
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        is_admin: ''
       },
-      defaultCategory:{
-        arName: "",
-        enName: "",
-        parent_id:"",
+      defaultUser:{
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        is_admin: false
       },
       prompt: false,
-      dialogHeader: this.$t('headers.create'),
+      dialogHeader: this.$t('btns.create'),
       columns: [
         {
           name: "#",
           required: true,
-          label: this.$t("table.categories.headers.id"),
+          label: this.$t("tables.headers.id"),
           align: "left",
-          field: (row) => (this.categories.indexOf(row) +1 ),
+          field: (row) => (this.users.indexOf(row) +1 ),
           sortable: true,
         },
         {
           name: "name",
           required: true,
-          label: this.$t("table.categories.headers.name"),
+          label: this.$t("tables.headers.user.name"),
           align: "center",
           field: (row) => row.name,
           sortable: true,
         },
         {
-          name: "parentCategory",
+          name: "email",
+          required: true,
+          label: this.$t("tables.headers.user.email"),
           align: "center",
-          label: this.$t("table.categories.headers.parentCategory"),
-          field: (row) => ( row.parent ? row.parent.name : ''),
+          field: (row) => row.email,
           sortable: true,
         },
         {
           name: "active",
           align: "center",
-          label: this.$t("table.categories.headers.activate")
+          label: this.$t("tables.headers.user.admin"),
+          field: (row) => row.is_admin
         },
         {
           name: "actions",
           align: "center",
-          label: this.$t("table.categories.headers.actions")
+          label: this.$t("tables.headers.actions")
         }
       ]
     };
@@ -183,6 +197,5 @@ export default {
 </script>
 <style lang="sass">
 .dialogForm
-  height: 300px
   width: 500px
 </style>

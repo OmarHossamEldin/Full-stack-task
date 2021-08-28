@@ -130,6 +130,8 @@ export default {
       user: {  
         name: 'Name',
         email: 'Email',
+        password: 'Password',
+        passwordConfirmation: 'Password Confirmation',
         admin: 'IsAdmin',
         actions: 'Actions'
       },
