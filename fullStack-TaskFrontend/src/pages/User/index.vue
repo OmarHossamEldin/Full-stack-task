@@ -91,7 +91,7 @@ export default {
     })
   },
   methods:{
-     ...mapActions(['getUsers', 'storeUser', 'updateUser', 'activeDeactiveUser', 'deleteUser']),
+     ...mapActions(['getUsers', 'storeUser', 'updateUser', 'makeAdmin', 'activeDeactiveUser', 'deleteUser']),
     save(user){
       if(user.id) {
         this.updateUser(user).then((response) => {
@@ -109,7 +109,7 @@ export default {
       this.deleteUser(thisUser);
     },
     changeStatus(user){
-      this.activeDeactiveUser(user);
+      this.makeAdmin(user);
     },
     openPrompt(row){
       if(row.id) {
