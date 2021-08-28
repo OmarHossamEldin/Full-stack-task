@@ -57,7 +57,15 @@
             <q-card-section class="col-2">
               <q-input dense filled v-model="user.email" :placeholder="$t('user.email')" />
             </q-card-section>
-            
+            <q-card-section class="col-2">
+              <q-input dense filled v-model="user.password" :placeholder="$t('user.email')" />
+            </q-card-section>
+            <q-card-section class="col-2">
+              <q-input dense filled v-model="user.password_confirmation" :placeholder="$t('user.email')" />
+            </q-card-section>
+            <q-card-section class="col-2">
+              <q-toggle v-model="user.is_admin" color="green"  :label="$t('user.email')"/>
+            </q-card-section>
             <q-card-actions  class="col-1 text-primary">
               <q-btn flat :label="$t('btns.cancel')" v-close-popup />
               <q-btn flat :label="$t('btns.save')" type="submit"  v-close-popup />
@@ -72,6 +80,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import BreadCrumbs from 'components/BreadCrumbs';
+import { ref } from 'vue';
 export default {
   name: "Users",
   components:{
@@ -142,7 +151,7 @@ export default {
         email: '',
         password: '',
         password_confirmation: '',
-        is_admin: ''
+        is_admin: false
       },
       prompt: false,
       dialogHeader: this.$t('btns.create'),
@@ -189,6 +198,5 @@ export default {
 </script>
 <style lang="sass">
 .dialogForm
-  height: 300px
   width: 500px
 </style>
