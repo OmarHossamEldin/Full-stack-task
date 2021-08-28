@@ -7,7 +7,7 @@ Vue.prototype.$axios = axios;
 
 let token = localStorage.getItem('token') || null;
 if (token) {
-  Vue.prototype.$axios.defaults.headers.common.Authorization = 'Bearer' + token;
+  Vue.prototype.$axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 }
 
 let language = localStorage.getItem('Content-language') || 'en';

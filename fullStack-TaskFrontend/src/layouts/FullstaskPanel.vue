@@ -26,7 +26,7 @@ export default {
   components: {
     PageHeader,
     SideBar,
-    PageFooter,
+    PageFooter
   },
   data() {
     return {
@@ -34,23 +34,34 @@ export default {
       mainNavigations: [
         {
           icon: "category",
-          label: this.$t("mainNavigation.category.label"),
+          label: this.$t("mainNavigation.performanceReview.label"),
           subNavigations: [
             {
-              to: "category",
+              to: "performanceReview.index",
               icon: "table_view",
-              label: this.$t("mainNavigation.category.subNavigation.index"),
+              label: this.$t("mainNavigation.performanceReview.subNavigation.index"),
+            },
+          ],
+        },
+        {
+          icon: "feedback",
+          label: this.$t("mainNavigation.feedBackRequest.label"),
+          subNavigations: [
+            {
+              to: "feedBackRequest.index",
+              icon: "table_view",
+              label: this.$t("mainNavigation.feedBackRequest.subNavigation.index"),
             },
           ],
         },
         {
           icon: "lock",
-          label: this.$t("mainNavigation.admin.label"),
+          label: this.$t("mainNavigation.user.label"),
           subNavigations: [
             {
-              to: "admin.index",
+              to: "user.index",
               icon: "admin_panel_settings",
-              label: this.$t("mainNavigation.admin.subNavigation.index"),
+              label: this.$t("mainNavigation.user.subNavigation.index"),
             }
           ],
         }

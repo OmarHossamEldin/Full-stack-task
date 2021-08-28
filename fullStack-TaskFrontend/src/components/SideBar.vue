@@ -5,7 +5,7 @@
         bordered
         :width="200"
         :breakpoint="500"
-        content-class="bg-white"
+        class="bg-grey-3"
       >
         <q-scroll-area class="fit">
           <q-list>

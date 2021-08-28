@@ -12,7 +12,7 @@ const actions = {
     async getUsers({ commit }) {
         try {
             const response = await axios.get('users');
-            commit('fetchUsers', response.data);
+            commit('fetchUsers', response.data.data);
         } catch (error) {
             return error.response;
         }
@@ -41,7 +41,7 @@ const actions = {
     },
     async deleteUser({ commit }, data) {
         try {
-            const response = await axios.delete(`admin/${data}`);
+            const response = await axios.delete(`users/${data}`);
             commit('deleteUser', response.data);
             return response;
         } catch (error) {
@@ -51,7 +51,7 @@ const actions = {
 };
 
 const mutations = {
-    fetchUsers: (state, data) => (state.users = data),
+    fetchUsers: (state, data) => (state.users = data.users),
     newUser: (state, data) => (state.users.push(data)),
     deleteUsers:(state, data) =>(state.users = state.users.filter((user) => user.id !== data))
 };

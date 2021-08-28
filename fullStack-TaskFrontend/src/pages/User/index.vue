@@ -20,7 +20,7 @@
           color="primary"
           v-model="filter"
           dense
-          :placeholder="$t('table.search')"
+          :placeholder="$t('tables.search')"
         >
           <template v-slot:append>
             <q-icon name="search" />
@@ -56,7 +56,9 @@ export default {
     BreadCrumbs
   },
   computed:{
-    ...mapGetters({users:'allUsers'})
+    ...mapGetters({
+      users:'allUsers',
+    })
   },
   methods:{
     ...mapActions(['getUsers', 'deleteUser']),
@@ -68,11 +70,13 @@ export default {
     }
   },
   created(){
-    this.getAdmins();
+    this.getUsers();
+    console.log(typeof(this.allUsers));
+    
   },
   data() {
     return {
-      title: this.$t('table.users.title'),
+      title: this.$t('mainNavigation.user.subNavigation.index'),
       filter: "",
       prompt: false,
       dialogHeader: this.$t('headers.create'),
@@ -80,7 +84,7 @@ export default {
         {
           name: "#",
           required: true,
-          label: this.$t("table.users.headers.id"),
+          label: this.$t("tables.headers.id"),
           align: "left",
           field: (row) => (this.users.indexOf(row) +1 ),
           sortable: true,
@@ -88,28 +92,29 @@ export default {
         {
           name: "name",
           required: true,
-          label: this.$t("table.users.headers.name"),
+          label: this.$t("tables.headers.user.name"),
           align: "center",
-          field: (row) => row.person.firstName,
+          field: (row) => row.name,
           sortable: true,
         },
         {
-          name: "roles",
+          name: "email",
           required: true,
-          label: this.$t("table.users.headers.roles"),
+          label: this.$t("tables.headers.user.email"),
           align: "center",
-          field: (row) => (row.role ? row.role.map((index) => index.name):""),
+          field: (row) => row.email,
           sortable: true,
         },
         {
           name: "active",
           align: "center",
-          label: this.$t("table.users.headers.active")
+          label: this.$t("tables.headers.user.admin"),
+          field: (row) => row.is_admin
         },
         {
           name: "actions",
           align: "center",
-          label: this.$t("table.users.headers.actions")
+          label: this.$t("tables.headers.actions")
         }
       ]
     };

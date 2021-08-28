@@ -128,9 +128,18 @@ export default {
             }
           }
     },
-    headers:{
-      create: 'إنشاء',
-      edit: 'تعديل'
+    tables: {
+        search: 'بحث',
+        headers:{
+          id: 'التسلس',
+          actions: 'عمليات',
+          user: {  
+            name: 'أسم',
+            email: 'البريد',
+            admin: 'المدير',
+            actions: 'العمليات'
+          }
+        }
     },
     btns:{
         create: "إنشاء",

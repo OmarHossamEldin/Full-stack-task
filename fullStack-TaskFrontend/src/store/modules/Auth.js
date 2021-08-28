@@ -20,7 +20,7 @@ const actions = {
             });
             localStorage.setItem('user', JSON.stringify(response.data.data.user));
             localStorage.setItem('token', response.data.data.user.api_token);
-            Vue.prototype.$axios.defaults.headers.common.Authorization = 'Bearer '+response.data.data.user.api_token;
+            Vue.prototype.$axios.defaults.headers.common.Authorization = `Bearer ${response.data.data.user.api_token}`;
             commit('authenticateUser', response.data.data);
             return response;
         } catch (error) {

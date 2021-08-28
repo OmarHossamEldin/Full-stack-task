@@ -1,4 +1,3 @@
-
 export default {
   isoName: 'en-us',
   nativeName: 'English (US)',
@@ -105,27 +104,36 @@ export default {
   },
   mainNavigation : {
     performanceReview: {
-      label: "PerformanceReview", 
+      label: "Review", 
       subNavigation:{
-          index: "performanceReviews"
+          index: "Reviews"
       }
     },
     feedBackRequest: {
-      label: "FeedBackRequest", 
+      label: "FeedBack", 
       subNavigation:{
-          index: "FeedBackRequests"
+          index: "FeedBacks"
       }
     },
     user: {
       label: "User", 
       subNavigation:{
           index: "Users"
-      }
-    }
+      },
+    } 
   },
-  headers:{
-    create: 'Create',
-    edit: 'Edit'
+  tables: {
+    search: 'Search',
+    headers:{
+      id: 'id',
+      actions: 'Actions',
+      user: {  
+        name: 'Name',
+        email: 'Email',
+        admin: 'IsAdmin',
+        actions: 'Actions'
+      },
+    }
   },
   btns:{
     create: "Create",
