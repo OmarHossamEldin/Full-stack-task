@@ -5,7 +5,7 @@ const state = {
 };
 
 const getters = {
-    allUsers: (state) => (state.users)
+    allFeedbacks: (state) => (state.users)
 };
 
 const actions = {
