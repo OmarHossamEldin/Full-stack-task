@@ -90,17 +90,17 @@ export default {
   methods:{
      ...mapActions(['getUsers', 'getReviews', 'storeReview', 'updateReview', 'writeReview', 'deleteReview']),
     save(review){
-      if(review.id) {
-        this.updateReview(review).then((response) => {
-          this.$notifyAlert(response);
-        });
-      }
-      else {
+      // if(review.id) {
+      //   this.updateReview(review).then((response) => {
+      //     this.$notifyAlert(response);
+      //   });
+      // // }
+      // else {
         this.storeReview(review).then((response) => {
           this.$notifyAlert(response);
         });
-      }  
-      this.user = this.defaultUser;
+      // }  
+      this.review = this.defaultReview;
     },
     deleteThis(thisReview){
       this.deleteReview(thisReview);
@@ -111,18 +111,15 @@ export default {
     openPrompt(row){
       if(row.id) {
         this.dialogHeader = this.$t('btns.edit');
-        this.user = {
+        this.review = {
           id: row.id,
-          name: row.name,
-          email: row.email,
-          password: '',
-          password_confirmation: '',
-          is_admin: row.is_admin
+          reviewer_id: '',
+          reviewee_id: ''
         };
       }
       else{
         this.dialogHeader = this.$t('btns.create');
-        this.user = this.defaultUser;
+        this.review = this.defaultReview;
       }
       this.prompt = !this.prompt;
     }
@@ -133,7 +130,7 @@ export default {
   },
   data() {
     return {
-      title: this.$t('mainNavigation.feedBackRequest.subNavigation.index'),
+      title: this.$t('mainNavigation.performanceReview.subNavigation.index'),
       filter: "",
       reviewees: [],
       review:{

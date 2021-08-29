@@ -20,11 +20,8 @@ const actions = {
     async storeReview({ commit }, data) {
         try {
             const response = await axios.post('performance-reviews', {
-                name:data.name,
-                email:data.email,
-                password:data.password,
-                password_confirmation:data.password_confirmation,
-                is_admin:data.is_admin
+                reviewer_id:data.reviewer_id,
+                reviewee_id:data.reviewee_id
             });
             commit('newReview', response.data.data);
             return response;
