@@ -52,10 +52,10 @@
               <q-btn icon="close" flat round dense v-close-popup />
             </q-card-section>
             <q-card-section class="col-2" >
-              <v-select :options="options" v-model='review.reviewer_id' :reduce="reviewer_id => reviewer_id.id" label="name" :placeholder="$t('category.parentCategory')"></v-select>
+              <v-select @option:selected="filterReviewes" :options="reviewers" v-model='review.reviewer_id' :reduce="reviewer_id => reviewer_id.id" label="name" :placeholder="$t('tables.headers.review.reviewer')"></v-select>
             </q-card-section>
             <q-card-section class="col-2">
-              <v-select :options="options" v-model='review.reviewee_id' :reduce="reviewee_id => reviewee_id.id" label="name" :placeholder="$t('category.parentCategory')"></v-select>
+              <v-select :options="reviewees" v-model='review.reviewee_id' :reduce="reviewee_id => reviewee_id.id" label="name" :placeholder="$t('tables.headers.review.reviewee')"></v-select>
             </q-card-section>
             <q-card-actions  class="col-1 text-primary">
               <q-btn flat :label="$t('btns.cancel')" v-close-popup />
@@ -79,8 +79,11 @@ export default {
   computed:{
     ...mapGetters({
       reviews:'allReviews',
-      options: 'allUsersOptions'
-    })
+      reviewers: 'allUsersOptions',
+    }),
+    reviewees: {
+     
+    }
   },
   methods:{
      ...mapActions(['getUsers', 'getReviewes', 'storeReview', 'updateReview', 'writeReview', 'deleteReview']),
@@ -120,21 +123,24 @@ export default {
         this.user = this.defaultUser;
       }
       this.prompt = !this.prompt;
+    },
+    filterReviewes (value) {
+      if(value.id)
+        this.reviewees = this.reviewers.filter((reviewer) => reviewer.id !== value.id);
     }
   },
   created(){
     this.getUsers();
-    
   },
   data() {
     return {
-      title: this.$t('mainNavigation.user.subNavigation.index'),
+      title: this.$t('mainNavigation.feedBackRequest.subNavigation.index'),
       filter: "",
-       review:{
+      review:{
         reviewer_id: '',
         reviewee_id: ''
       },
-      defaultUser:{
+      defaultReview:{
         reviewer_id: '',
         reviewee_id: ''
       },

@@ -132,8 +132,12 @@ export default {
         email: 'Email',
         password: 'Password',
         passwordConfirmation: 'Password Confirmation',
-        admin: 'IsAdmin',
-        actions: 'Actions'
+        admin: 'IsAdmin'
+      },
+      review: {  
+        reviewer: 'Reviewer',
+        reviewee: 'Reviewee',
+        review: 'Review'
       },
     }
   },

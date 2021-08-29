@@ -137,9 +137,13 @@ export default {
             name: 'أسم',
             email: 'البريد',
             admin: 'المدير',
-            actions: 'العمليات'
           }
-        }
+        },
+        review: {  
+            reviewer: 'المراجع',
+            reviewee: 'الذي سيتم المرجعه عليه',
+            review: 'المراجعه'
+        },
     },
     btns:{
         create: "إنشاء",
