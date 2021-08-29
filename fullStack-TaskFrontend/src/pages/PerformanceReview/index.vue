@@ -30,7 +30,7 @@
       <template v-slot:body-cell-active="props">
         <q-td :props="props">
           <q-btn size="sm"
-            :color="props.row.is_admin ?  'green':'warning'" round icon="toggle_off"
+            :color="props.row.is_admin ?  'green':'warning'" round icon="edit"
             @click="changeStatus(props.row)" /> 
         </q-td>
       </template>
@@ -88,25 +88,25 @@ export default {
     })
   },
   methods:{
-     ...mapActions(['getUsers', 'getReviewes', 'storeReview', 'updateReview', 'writeReview', 'deleteReview']),
-    save(user){
-      if(user.id) {
-        this.updateReview(user).then((response) => {
+     ...mapActions(['getUsers', 'getReviews', 'storeReview', 'updateReview', 'writeReview', 'deleteReview']),
+    save(review){
+      if(review.id) {
+        this.updateReview(review).then((response) => {
           this.$notifyAlert(response);
         });
       }
       else {
-        this.storeReview(user).then((response) => {
+        this.storeReview(review).then((response) => {
           this.$notifyAlert(response);
         });
       }  
       this.user = this.defaultUser;
     },
-    deleteThis(thisUser){
-      this.deleteReview(thisUser);
+    deleteThis(thisReview){
+      this.deleteReview(thisReview);
     },
-    changeStatus(user){
-      this.writeReview(user);
+    changeStatus(review){
+      this.writeReview(review);
     },
     openPrompt(row){
       if(row.id) {
@@ -129,6 +129,7 @@ export default {
   },
   created(){
     this.getUsers();
+    this.getReviews();
   },
   data() {
     return {
@@ -151,30 +152,30 @@ export default {
           required: true,
           label: this.$t("tables.headers.id"),
           align: "left",
-          field: (row) => (this.users.indexOf(row) +1 ),
+          field: (row) => (this.reviews.indexOf(row) +1 ),
           sortable: true,
         },
         {
           name: "name",
           required: true,
-          label: this.$t("tables.headers.user.name"),
+          label: this.$t("tables.headers.review.reviewer"),
           align: "center",
-          field: (row) => row.name,
+          field: (row) => row.reviewer.name,
           sortable: true,
         },
         {
           name: "email",
           required: true,
-          label: this.$t("tables.headers.user.email"),
+          label: this.$t("tables.headers.review.reviewee"),
           align: "center",
-          field: (row) => row.email,
+          field: (row) => row.reviewee.name,
           sortable: true,
         },
         {
           name: "active",
           align: "center",
-          label: this.$t("tables.headers.user.admin"),
-          field: (row) => row.is_admin
+          label: this.$t("tables.headers.review.review"),
+          field: (row) => row.review
         },
         {
           name: "actions",

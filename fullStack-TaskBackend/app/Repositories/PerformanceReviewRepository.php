@@ -14,7 +14,7 @@ class PerformanceReviewRepository implements Crud
      */
     public function list(): array
     {
-        $performanceReview = PerformanceReview::all()->toArray();
+        $performanceReview = PerformanceReview::with(['reviewer:id,name', 'reviewee:id,name'])->get()->toArray();
         return $performanceReview;
     }
 

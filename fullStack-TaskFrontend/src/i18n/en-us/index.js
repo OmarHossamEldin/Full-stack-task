@@ -137,7 +137,7 @@ export default {
       review: {  
         reviewer: 'Reviewer',
         reviewee: 'Reviewee',
-        review: 'Review'
+        review: 'WriteReivew'
       },
     }
   },
