@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const state = {
-    users: []
+    reviews: []
 };
 
 const getters = {
-    allReviews: (state) => (state.users)
+    allReviews: (state) => (state.reviews)
 };
 
 const actions = {
@@ -67,10 +67,10 @@ const actions = {
 };
 
 const mutations = {
-    fetchReviews: (state, data) => (state.users = data.reviews),
-    updateReview: (state, data, user) => (state.users.splice(state.users.indexOf(user) - 1, 1, data.user)),
-    newReview: (state, data) => (state.users.push(data.user)),
-    deleteReview:(state, id) =>(state.users = state.users.filter((user) => user.id !== id))
+    fetchReviews: (state, data) => (state.reviews = data.reviews),
+    updateReview: (state, data, user) => (state.reviews.splice(state.reviews.indexOf(review) - 1, 1, data.review)),
+    newReview: (state, data) => (state.reviews.push(data.review)),
+    deleteReview:(state, id) =>(state.reviews = state.reviews.filter((review) => review.id !== id))
 };
 
 export default {
