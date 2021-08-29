@@ -45,7 +45,7 @@
       <!-- dialog create - edit -->
       <q-dialog v-model="prompt" position="top" >
         <q-card class="column dialogForm">
-          <q-form @submit="save(user)">
+          <q-form @submit="save(review)">
             <q-card-section class="col-2 row">
               <div class="text-h4">{{dialogHeader}}</div>
               <q-space />
@@ -90,16 +90,16 @@ export default {
   methods:{
      ...mapActions(['getUsers', 'getReviews', 'storeReview', 'updateReview', 'writeReview', 'deleteReview']),
     save(review){
-      // if(review.id) {
-      //   this.updateReview(review).then((response) => {
-      //     this.$notifyAlert(response);
-      //   });
-      // // }
-      // else {
+      if(review.id) {
+        this.updateReview(review).then((response) => {
+          this.$notifyAlert(response);
+        });
+      }
+      else {
         this.storeReview(review).then((response) => {
           this.$notifyAlert(response);
         });
-      // }  
+      }  
       this.review = this.defaultReview;
     },
     deleteThis(thisReview){

@@ -32,11 +32,8 @@ const actions = {
     async updateReview({ commit }, data) {
         try {
             const response = await axios.put(`performance-reviews/${data.id}`, {
-                name:data.name,
-                email:data.email,
-                password:data.password,
-                password_confirmation:data.password_confirmation,
-                is_admin:data.is_admin
+                reviewer_id:data.reviewer_id,
+                reviewee_id:data.reviewee_id
             });
             commit('updateReview', response.data.data);
             return response;
