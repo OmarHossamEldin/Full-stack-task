@@ -91,7 +91,7 @@ export default {
     })
   },
   methods:{
-     ...mapActions(['getUsers', 'storeUser', 'updateUser', 'makeAdmin', 'activeDeactiveUser', 'deleteUser']),
+     ...mapActions(['getUsers', 'storeUser', 'updateUser', 'makeAdmin', 'deleteUser']),
     save(user){
       if(user.id) {
         this.updateUser(user).then((response) => {

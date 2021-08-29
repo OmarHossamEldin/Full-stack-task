@@ -6,7 +6,7 @@
   <q-page class="q-pa-md">
     <!-- table -->
     <q-table
-      :data="users"
+      :data="reviews"
       :columns="columns"
       :filter="filter"
       :rows-per-page-options="[20, 30, 50, 0]"
@@ -30,13 +30,13 @@
       <template v-slot:body-cell-active="props">
         <q-td :props="props">
           <q-btn size="sm"
-            :color="props.row.active ? 'warning' : 'green'" round icon="toggle_off"
+            :color="props.row.is_admin ?  'green':'warning'" round icon="toggle_off"
             @click="changeStatus(props.row)" /> 
         </q-td>
       </template>
       <template v-slot:body-cell-actions="props">
         <q-td :props="props" >
-          <q-btn size="sm" color="info" :label="$t('btns.edit')"  />
+          <q-btn size="sm" color="info" :label="$t('btns.edit')" @click="openPrompt(props.row)" />
           &nbsp;
           <q-btn size="sm" color="red" :label="$t('btns.delete')" @click="deleteThis(props.row)" />
         </q-td>
@@ -52,19 +52,10 @@
               <q-btn icon="close" flat round dense v-close-popup />
             </q-card-section>
             <q-card-section class="col-2" >
-              <q-input dense filled outlined v-model="user.name" :placeholder="$t('tables.headers.user.name')" />
+              <v-select :options="options" v-model='review.reviewer_id' :reduce="reviewer_id => reviewer_id.id" label="name" :placeholder="$t('category.parentCategory')"></v-select>
             </q-card-section>
             <q-card-section class="col-2">
-              <q-input dense filled v-model="user.email" :placeholder="$t('tables.headers.user.email')" />
-            </q-card-section>
-            <q-card-section class="col-2">
-              <q-input dense filled v-model="user.password" :placeholder="$t('tables.headers.user.password')" />
-            </q-card-section>
-            <q-card-section class="col-2">
-              <q-input dense filled v-model="user.password_confirmation" :placeholder="$t('tables.headers.user.passwordConfirmation')" />
-            </q-card-section>
-            <q-card-section class="col-2">
-              <q-toggle v-model="user.is_admin" color="green"  :label="$t('tables.headers.user.admin')"/>
+              <v-select :options="options" v-model='review.reviewee_id' :reduce="reviewee_id => reviewee_id.id" label="name" :placeholder="$t('category.parentCategory')"></v-select>
             </q-card-section>
             <q-card-actions  class="col-1 text-primary">
               <q-btn flat :label="$t('btns.cancel')" v-close-popup />
@@ -87,29 +78,30 @@ export default {
   },
   computed:{
     ...mapGetters({
-      users:'allUsers',
+      reviews:'allReviews',
+      options: 'allUsersOptions'
     })
   },
   methods:{
-     ...mapActions(['getUsers', 'storeUser', 'updateUser', 'activeDeactiveUser', 'deleteUser']),
+     ...mapActions(['getUsers', 'getReviewes', 'storeReview', 'updateReview', 'writeReview', 'deleteReview']),
     save(user){
       if(user.id) {
-        this.updateUser(user).then((response) => {
+        this.updateReview(user).then((response) => {
           this.$notifyAlert(response);
         });
       }
       else {
-        this.storeUser(user).then((response) => {
+        this.storeReview(user).then((response) => {
           this.$notifyAlert(response);
         });
       }  
       this.user = this.defaultUser;
     },
     deleteThis(thisUser){
-      this.deleteThisUser(thisUser);
+      this.deleteReview(thisUser);
     },
     changeStatus(user){
-      this.activeDeactiveUser(user);
+      this.writeReview(user);
     },
     openPrompt(row){
       if(row.id) {
@@ -131,26 +123,20 @@ export default {
     }
   },
   created(){
-    //this.getUsers();
+    this.getUsers();
     
   },
   data() {
     return {
       title: this.$t('mainNavigation.user.subNavigation.index'),
       filter: "",
-       user:{
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-        is_admin: ''
+       review:{
+        reviewer_id: '',
+        reviewee_id: ''
       },
       defaultUser:{
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-        is_admin: false
+        reviewer_id: '',
+        reviewee_id: ''
       },
       prompt: false,
       dialogHeader: this.$t('btns.create'),

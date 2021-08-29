@@ -30,13 +30,13 @@
       <template v-slot:body-cell-active="props">
         <q-td :props="props">
           <q-btn size="sm"
-            :color="props.row.active ? 'warning' : 'green'" round icon="toggle_off"
+            :color="props.row.is_admin ?  'green':'warning'" round icon="toggle_off"
             @click="changeStatus(props.row)" /> 
         </q-td>
       </template>
       <template v-slot:body-cell-actions="props">
         <q-td :props="props" >
-          <q-btn size="sm" color="info" :label="$t('btns.edit')"  />
+          <q-btn size="sm" color="info" :label="$t('btns.edit')" @click="openPrompt(props.row)" />
           &nbsp;
           <q-btn size="sm" color="red" :label="$t('btns.delete')" @click="deleteThis(props.row)" />
         </q-td>
@@ -81,7 +81,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import BreadCrumbs from 'components/BreadCrumbs';
 export default {
-  name: "Feedbacks",
+  name: "Users",
   components:{
     BreadCrumbs
   },
@@ -91,7 +91,7 @@ export default {
     })
   },
   methods:{
-     ...mapActions(['getUsers', 'storeUser', 'updateUser', 'activeDeactiveUser', 'deleteUser']),
+     ...mapActions(['getUsers', 'storeUser', 'updateUser', 'makeAdmin', 'activeDeactiveUser', 'deleteUser']),
     save(user){
       if(user.id) {
         this.updateUser(user).then((response) => {
@@ -109,7 +109,7 @@ export default {
       this.deleteUser(thisUser);
     },
     changeStatus(user){
-      this.activeDeactiveUser(user);
+      this.makeAdmin(user);
     },
     openPrompt(row){
       if(row.id) {
@@ -131,7 +131,7 @@ export default {
     }
   },
   created(){
-    //this.getUsers();
+    this.getUsers();
     
   },
   data() {

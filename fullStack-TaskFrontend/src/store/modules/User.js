@@ -1,11 +1,13 @@
 import axios from 'axios';
+import optionsFilteration from "../../helpers/selectjsFilteration";
 
 const state = {
     users: []
 };
 
 const getters = {
-    allUsers: (state) => (state.users)
+    allUsers: (state) => (state.users),
+    allUsersOptions: (state) => (optionsFilteration(state.users))
 };
 
 const actions = {

@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 // loading modules
 import Auth from './modules/Auth';
-import PerformanceReivew from './modules/PerformanceReivew';
+import PerformanceReivew from './modules/PerformanceReview';
 import FeedBackRequest from './modules/FeedBackRequest';
 import User from './modules/User';
 
