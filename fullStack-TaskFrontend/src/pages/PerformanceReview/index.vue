@@ -52,7 +52,7 @@
               <q-btn icon="close" flat round dense v-close-popup />
             </q-card-section>
             <q-card-section class="col-2" >
-              <v-select @option:selected="filterReviewes" :options="reviewers" v-model='review.reviewer_id' :reduce="reviewer_id => reviewer_id.id" label="name" :placeholder="$t('tables.headers.review.reviewer')"></v-select>
+              <v-select :options="reviewers" v-model='review.reviewer_id' :reduce="reviewer_id => reviewer_id.id" label="name" :placeholder="$t('tables.headers.review.reviewer')"></v-select>
             </q-card-section>
             <q-card-section class="col-2">
               <v-select :options="reviewees" v-model='review.reviewee_id' :reduce="reviewee_id => reviewee_id.id" label="name" :placeholder="$t('tables.headers.review.reviewee')"></v-select>
@@ -76,14 +76,16 @@ export default {
   components:{
     BreadCrumbs
   },
+  watch: {
+    'review.reviewer_id': function (newVal, oldVal){
+      this.reviewees = newVal ? this.reviewers.filter((reviewer) => reviewer.id != newVal) : [];
+    }
+  },
   computed:{
     ...mapGetters({
       reviews:'allReviews',
       reviewers: 'allUsersOptions',
-    }),
-    reviewees: {
-     
-    }
+    })
   },
   methods:{
      ...mapActions(['getUsers', 'getReviewes', 'storeReview', 'updateReview', 'writeReview', 'deleteReview']),
@@ -123,10 +125,6 @@ export default {
         this.user = this.defaultUser;
       }
       this.prompt = !this.prompt;
-    },
-    filterReviewes (value) {
-      if(value.id)
-        this.reviewees = this.reviewers.filter((reviewer) => reviewer.id !== value.id);
     }
   },
   created(){
@@ -136,6 +134,7 @@ export default {
     return {
       title: this.$t('mainNavigation.feedBackRequest.subNavigation.index'),
       filter: "",
+      reviewees: [],
       review:{
         reviewer_id: '',
         reviewee_id: ''
