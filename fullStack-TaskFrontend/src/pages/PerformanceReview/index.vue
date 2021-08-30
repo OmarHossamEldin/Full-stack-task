@@ -97,7 +97,7 @@ export default {
      ...mapActions(['getUsers', 'getReviews', 'storeReview', 'writeReview', 'deleteReview']),
     save(review){
       if(review.id) {
-        this.writeReview(review).then((response) => {
+        this.writeReview({new:review, old:this.oldReview}).then((response) => {
           this.$notifyAlert(response);
         });
       }
@@ -114,6 +114,7 @@ export default {
     openPrompt(row){
       if(row.id) {
         this.dialogHeader = this.$t('tables.headers.review.review');
+        this.oldReview = row;
         this.review = {
           id: row.id,
           skills: []
@@ -142,13 +143,12 @@ export default {
       review:{
         reviewer_id: '',
         reviewee_id: '',
-        skills: []
       },
       defaultReview:{
         reviewer_id: '',
         reviewee_id: '',
-        skills: []
       },
+      oldReview: {},
       newSkill: '',
       prompt: false,
       dialogHeader: this.$t('btns.create'),

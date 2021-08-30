@@ -43,7 +43,7 @@ const actions = {
                 password_confirmation:data.password_confirmation,
                 is_admin:data.is_admin
             });
-            commit('updateUser', response.data.data);
+            commit('updateUser', response.data.data, data);
             return response;
         } catch (error) {
             return error.response;
@@ -57,7 +57,7 @@ const actions = {
                 email:data.email,
                 is_admin:data.is_admin
             });
-            commit('updateUser', response.data.data);
+            commit('updateUser', response.data.data, data);
             return response;
         } catch (error) {
             return error.response;
@@ -76,7 +76,7 @@ const actions = {
 
 const mutations = {
     fetchUsers: (state, data) => (state.users = data.users),
-    updateUser: (state, data) => (state.users.splice(state.users.indexOf(user) - 1, 1, data.user)),
+    updateUser: (state, data, user) => (state.users.splice(state.users.indexOf(user) - 1, 1, data.user)),
     newUser: (state, data) => (state.users.push(data.user)),
     deleteUser:(state, id) =>(state.users = state.users.filter((user) => user.id !== id))
 };

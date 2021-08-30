@@ -31,10 +31,11 @@ const actions = {
     },
     async writeReview({ commit }, data) {
         try {
-            const response = await axios.put(`performance-reviews/${data.id}`, {
-                review:data.skills
+            const response = await axios.put(`performance-reviews/${data.old.id}`, {
+                review:data.new.skills
             });
-            commit('updateReview', response.data.data);
+            console.log(data.old)
+            commit('updateReview', response.data.data, data.old);
             return response;
         } catch (error) {
             return error.response;
@@ -53,7 +54,7 @@ const actions = {
 
 const mutations = {
     fetchReviews: (state, data) => (state.reviews = data.reviews),
-    updateReview: (state, data) => (state.reviews = state.reviews.map((review) => review = review.id === data.review.id ? data.review : review) ),
+    updateReview: (state, data, review) => (state.reviews.splice(state.reviews.indexOf(review) - 1, 1, data.review)),
     newReview: (state, data) => (state.reviews.push(data.review)),
     deleteReview:(state, id) =>(state.reviews = state.reviews.filter((review) => review.id !== id))
 };
