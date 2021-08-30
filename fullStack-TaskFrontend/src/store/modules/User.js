@@ -76,7 +76,7 @@ const actions = {
 
 const mutations = {
     fetchUsers: (state, data) => (state.users = data.users),
-    updateUser: (state, data, user) => (state.users.splice(state.users.indexOf(user) - 1, 1, data.user)),
+    updateUser: (state, data) => (state.users.splice(state.users.indexOf(user) - 1, 1, data.user)),
     newUser: (state, data) => (state.users.push(data.user)),
     deleteUser:(state, id) =>(state.users = state.users.filter((user) => user.id !== id))
 };

@@ -30,19 +30,18 @@
       <template v-slot:body-cell-active="props">
         <q-td :props="props">
           <q-btn size="sm"
-            :color="props.row.is_admin ?  'green':'warning'" round icon="edit"
-            @click="changeStatus(props.row)" /> 
+            :color="!!props.row.review ?  'warning':'green'" round icon="edit"
+            @click="openPrompt(props.row)" />
         </q-td>
       </template>
       <template v-slot:body-cell-actions="props">
         <q-td :props="props" >
-          <q-btn size="sm" color="info" :label="$t('btns.edit')" @click="openPrompt(props.row)" />
           &nbsp;
           <q-btn size="sm" color="red" :label="$t('btns.delete')" @click="deleteThis(props.row)" />
         </q-td>
       </template>
     </q-table>
-      <!-- dialog create - edit -->
+      <!-- dialog create - write review -->
       <q-dialog v-model="prompt" position="top" >
         <q-card class="column dialogForm">
           <q-form @submit="save(review)">
@@ -51,15 +50,22 @@
               <q-space />
               <q-btn icon="close" flat round dense v-close-popup />
             </q-card-section>
-            <q-card-section class="col-2" >
+             <!-- dialog create -->
+            <q-card-section class="col-2" v-if="dialogHeader === $t('btns.create')" >
               <v-select :options="reviewers" v-model='review.reviewer_id' :reduce="reviewer_id => reviewer_id.id" label="name" :placeholder="$t('tables.headers.review.reviewer')"></v-select>
             </q-card-section>
-            <q-card-section class="col-2">
+            <q-card-section class="col-2" v-if="dialogHeader === $t('btns.create')">
               <v-select :options="reviewees" v-model='review.reviewee_id' :reduce="reviewee_id => reviewee_id.id" label="name" :placeholder="$t('tables.headers.review.reviewee')"></v-select>
             </q-card-section>
+             <!-- dialog write review -->
+            <q-card-section class="col-2" v-if="dialogHeader === this.$t('tables.headers.review.review')" >
+               <q-input v-if="dialogHeader !==$t('btns.create')" dense filled outlined v-model="newSkill" :placeholder="$t('tables.headers.review.skill')" />
+               
+            </q-card-section>
             <q-card-actions  class="col-1 text-primary">
-              <q-btn flat :label="$t('btns.cancel')" v-close-popup />
-              <q-btn flat :label="$t('btns.save')" type="submit"  v-close-popup />
+              <q-btn  color='red'  :label="$t('btns.cancel')" v-close-popup />
+              <q-btn color='green'  :label="$t('btns.save')" type="submit"  v-close-popup />
+              <q-btn  size="sm" color='info' round icon="add" @click="addNewSkill" v-if="dialogHeader === this.$t('tables.headers.review.review')" />
             </q-card-actions>
           </q-form>
         </q-card>
@@ -77,7 +83,7 @@ export default {
     BreadCrumbs
   },
   watch: {
-    'review.reviewer_id': function (newVal, oldVal){
+    'review.reviewer_id': function (newVal){
       this.reviewees = newVal ? this.reviewers.filter((reviewer) => reviewer.id != newVal) : [];
     }
   },
@@ -88,40 +94,40 @@ export default {
     })
   },
   methods:{
-     ...mapActions(['getUsers', 'getReviews', 'storeReview', 'updateReview', 'writeReview', 'deleteReview']),
+     ...mapActions(['getUsers', 'getReviews', 'storeReview', 'writeReview', 'deleteReview']),
     save(review){
       if(review.id) {
-        this.updateReview(review).then((response) => {
+        this.writeReview(review).then((response) => {
           this.$notifyAlert(response);
         });
       }
-      else {
+      else{
         this.storeReview(review).then((response) => {
           this.$notifyAlert(response);
         });
-      }  
+      }
       this.review = this.defaultReview;
     },
     deleteThis(thisReview){
       this.deleteReview(thisReview);
     },
-    changeStatus(review){
-      this.writeReview(review);
-    },
     openPrompt(row){
       if(row.id) {
-        this.dialogHeader = this.$t('btns.edit');
+        this.dialogHeader = this.$t('tables.headers.review.review');
         this.review = {
           id: row.id,
-          reviewer_id: '',
-          reviewee_id: ''
+          skills: []
         };
       }
-      else{
+      else {
         this.dialogHeader = this.$t('btns.create');
         this.review = this.defaultReview;
       }
       this.prompt = !this.prompt;
+    },
+    addNewSkill(){
+      this.review.skills.push({skill: this.newSkill});
+      this.newSkill = ''
     }
   },
   created(){
@@ -135,12 +141,15 @@ export default {
       reviewees: [],
       review:{
         reviewer_id: '',
-        reviewee_id: ''
+        reviewee_id: '',
+        skills: []
       },
       defaultReview:{
         reviewer_id: '',
-        reviewee_id: ''
+        reviewee_id: '',
+        skills: []
       },
+      newSkill: '',
       prompt: false,
       dialogHeader: this.$t('btns.create'),
       columns: [
@@ -153,7 +162,7 @@ export default {
           sortable: true,
         },
         {
-          name: "name",
+          name: "reviewer",
           required: true,
           label: this.$t("tables.headers.review.reviewer"),
           align: "center",
@@ -161,7 +170,7 @@ export default {
           sortable: true,
         },
         {
-          name: "email",
+          name: "reviewee",
           required: true,
           label: this.$t("tables.headers.review.reviewee"),
           align: "center",

@@ -27,6 +27,7 @@ class PerformanceReviewRepository implements Crud
     public function create(array $validatedData): object
     {
         $performanceReview = PerformanceReview::create($validatedData);
+        $performanceReview->load(['reviewer:id,name', 'reviewee:id,name']);
         return $performanceReview;
     }
     
@@ -45,6 +46,7 @@ class PerformanceReviewRepository implements Crud
     public function update(object $performanceReview, array $validatedData): object
     {
         $performanceReview->update($validatedData);
+        $performanceReview->load(['reviewer:id,name', 'reviewee:id,name']);
         return $performanceReview;
     }
 

@@ -29,25 +29,10 @@ const actions = {
             return error.response;
         }
     },
-    async updateReview({ commit }, data) {
-        try {
-            const response = await axios.put(`performance-reviews/${data.id}`, {
-                reviewer_id:data.reviewer_id,
-                reviewee_id:data.reviewee_id
-            });
-            commit('updateReview', response.data.data);
-            return response;
-        } catch (error) {
-            return error.response;
-        }
-    },
     async writeReview({ commit }, data) {
         try {
-            data.is_admin = !data.is_admin;
             const response = await axios.put(`performance-reviews/${data.id}`, {
-                name:data.name,
-                email:data.email,
-                is_admin:data.is_admin
+                review:data.skills
             });
             commit('updateReview', response.data.data);
             return response;
@@ -68,7 +53,7 @@ const actions = {
 
 const mutations = {
     fetchReviews: (state, data) => (state.reviews = data.reviews),
-    updateReview: (state, data, user) => (state.reviews.splice(state.reviews.indexOf(review) - 1, 1, data.review)),
+    updateReview: (state, data) => (state.reviews = state.reviews.map((review) => review = review.id === data.review.id ? data.review : review) ),
     newReview: (state, data) => (state.reviews.push(data.review)),
     deleteReview:(state, id) =>(state.reviews = state.reviews.filter((review) => review.id !== id))
 };
