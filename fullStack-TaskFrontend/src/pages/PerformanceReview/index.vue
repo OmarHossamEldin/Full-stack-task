@@ -31,11 +31,12 @@
         <q-td :props="props">
           <q-btn size="sm"
             :color="!!props.row.review ?  'warning':'green'" round icon="edit"
-            @click="openPrompt(props.row)" />
+            @click="openPrompt(props.row, 'write')" />
         </q-td>
       </template>
       <template v-slot:body-cell-actions="props">
         <q-td :props="props" >
+          <q-btn size="sm" color="info" :label="$t('btns.show')" @click="openPrompt(props.row, 'show')" />
           &nbsp;
           <q-btn size="sm" color="red" :label="$t('btns.delete')" @click="deleteThis(props.row)" />
         </q-td>
@@ -58,9 +59,12 @@
               <v-select :options="reviewees" v-model='review.reviewee_id' :reduce="reviewee_id => reviewee_id.id" label="name" :placeholder="$t('tables.headers.review.reviewee')"></v-select>
             </q-card-section>
              <!-- dialog write review -->
-            <q-card-section class="col-2" v-if="dialogHeader === this.$t('tables.headers.review.review')" >
+            <q-card-section class="col-2" v-if="dialogHeader === $t('tables.headers.review.review')" >
                <q-input v-if="dialogHeader !==$t('btns.create')" dense filled outlined v-model="newSkill" :placeholder="$t('tables.headers.review.skill')" />
-               
+            </q-card-section>
+             <!-- dialog show review -->
+            <q-card-section class="col-2" v-for="review in review.review"  :key="review.skil">
+               <p class="text-h6">{{review}}</p>
             </q-card-section>
             <q-card-actions  class="col-1 text-primary">
               <q-btn  color='red'  :label="$t('btns.cancel')" v-close-popup />
@@ -111,14 +115,21 @@ export default {
     deleteThis(thisReview){
       this.deleteReview(thisReview);
     },
-    openPrompt(row){
-      if(row.id) {
+    openPrompt(row, show){
+      if(row.id && show === 'write') {
         this.dialogHeader = this.$t('tables.headers.review.review');
         this.oldReview = row;
         this.review = {
           id: row.id,
           skills: []
         };
+      }
+      else if(row.id && show === 'show') {
+        this.dialogHeader = this.$t('btns.show');
+        console.log(JSON.parse(row['review']))
+        row['review'] = JSON.parse(row['review']);
+        // row = row['review'].map((review) => review.skill);
+        // this.review = row;
       }
       else {
         this.dialogHeader = this.$t('btns.create');

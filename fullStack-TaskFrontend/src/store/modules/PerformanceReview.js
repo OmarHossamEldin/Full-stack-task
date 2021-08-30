@@ -34,7 +34,6 @@ const actions = {
             const response = await axios.put(`performance-reviews/${data.old.id}`, {
                 review:data.new.skills
             });
-            console.log(data.old)
             commit('updateReview', response.data.data, data.old);
             return response;
         } catch (error) {
