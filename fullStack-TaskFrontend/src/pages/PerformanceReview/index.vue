@@ -63,8 +63,8 @@
                <q-input v-if="dialogHeader !==$t('btns.create')" dense filled outlined v-model="newSkill" :placeholder="$t('tables.headers.review.skill')" />
             </q-card-section>
              <!-- dialog show review -->
-            <q-card-section class="col-2" v-for="review in review.review"  :key="review.skil">
-               <p class="text-h6">{{review}}</p>
+            <q-card-section class="col-2" >
+               <p class="text-h6">{{review.review}}</p>
             </q-card-section>
             <q-card-actions  class="col-1 text-primary">
               <q-btn  color='red'  :label="$t('btns.cancel')" v-close-popup />
@@ -126,10 +126,12 @@ export default {
       }
       else if(row.id && show === 'show') {
         this.dialogHeader = this.$t('btns.show');
-        console.log(JSON.parse(row['review']))
-        row['review'] = JSON.parse(row['review']);
-        // row = row['review'].map((review) => review.skill);
-        // this.review = row;
+        let skills = JSON.parse(row['review']),
+            text = '';
+        skills.map((review) => {
+           text += review.skill
+        });
+        this.review.review = text;
       }
       else {
         this.dialogHeader = this.$t('btns.create');
