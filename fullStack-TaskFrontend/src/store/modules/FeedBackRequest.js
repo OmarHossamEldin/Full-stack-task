@@ -1,23 +1,23 @@
 import axios from 'axios';
 
 const state = {
-    users: []
+    feedBacks: []
 };
 
 const getters = {
-    allUsers: (state) => (state.users)
+    allFeedBacks: (state) => (state.feedBacks)
 };
 
 const actions = {
-    async getUsers({ commit }) {
+    async getFeedBacks({ commit }) {
         try {
             const response = await axios.get('users');
-            commit('fetchUsers', response.data.data);
+            commit('fetchFeedBacks', response.data.data);
         } catch (error) {
             return error.response;
         }
     },
-    async storeUser({ commit }, data) {
+    async storeFeedBack({ commit }, data) {
         try {
             const response = await axios.post('users', {
                 name:data.name,
@@ -32,7 +32,7 @@ const actions = {
             return error.response;
         }
     },
-    async updateUser({ commit }, data) {
+    async updateFeedBack({ commit }, data) {
         try {
             const response = await axios.put(`users/${data.id}`, {
                 name:data.name,
@@ -47,21 +47,7 @@ const actions = {
             return error.response;
         }
     },
-    async makeAdmin({ commit }, data) {
-        try {
-            data.is_admin = !data.is_admin;
-            const response = await axios.put(`users/${data.id}`, {
-                name:data.name,
-                email:data.email,
-                is_admin:data.is_admin
-            });
-            commit('updateUser', response.data.data);
-            return response;
-        } catch (error) {
-            return error.response;
-        }
-    },
-    async deleteUser({ commit }, data) {
+    async deleteFeedBack({ commit }, data) {
         try {
             const response = await axios.delete(`users/${data.id}`);
             commit('deleteUser', data.id);
@@ -73,10 +59,10 @@ const actions = {
 };
 
 const mutations = {
-    fetchUsers: (state, data) => (state.users = data.users),
-    updateUser: (state, data, user) => (state.users.splice(state.users.indexOf(user) - 1, 1, data.user)),
-    newUser: (state, data) => (state.users.push(data.user)),
-    deleteUser:(state, id) =>(state.users = state.users.filter((user) => user.id !== id))
+    fetchFeedBacks: (state, data) => (state.users = data.users),
+    updateFeedBack: (state, data, user) => (state.users.splice(state.users.indexOf(user) - 1, 1, data.user)),
+    newFeedBack: (state, data) => (state.users.push(data.user)),
+    deleteFeedBack:(state, id) =>(state.users = state.users.filter((user) => user.id !== id))
 };
 
 export default {

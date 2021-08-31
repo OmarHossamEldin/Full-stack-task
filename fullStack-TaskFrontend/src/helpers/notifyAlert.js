@@ -9,6 +9,7 @@ function notifyAlert(response) {
           });
           break; 
         case 422:
+          
           let errors = response.data.errors;
           for (let error in errors){
             this.$q.notify({

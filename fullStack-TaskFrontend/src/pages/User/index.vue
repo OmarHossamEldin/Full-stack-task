@@ -96,11 +96,13 @@ export default {
       if(user.id) {
         this.updateUser(user).then((response) => {
           this.$notifyAlert(response);
+          this.user = this.defaultUser;
         });
       }
       else {
         this.storeUser(user).then((response) => {
           this.$notifyAlert(response);
+          this.user = this.defaultUser;
         });
       }  
       this.user = this.defaultUser;
