@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\Crud;
+use App\InterFaces\Crud;
 use App\Models\PerformanceReview;
 
 class PerformanceReviewRepository implements Crud
