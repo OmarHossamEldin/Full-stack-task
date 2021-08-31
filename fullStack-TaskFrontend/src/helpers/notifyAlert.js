@@ -5,11 +5,10 @@ function notifyAlert(response) {
         case 206:
           this.$q.notify({
             type: 'positive',
-            message: `This is a "positive" type notification.`
+            message: response.data.message
           });
           break; 
         case 422:
-          
           let errors = response.data.errors;
           for (let error in errors){
             this.$q.notify({

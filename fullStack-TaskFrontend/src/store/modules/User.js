@@ -31,7 +31,6 @@ const actions = {
             commit('newUser', response.data.data);
             return response;
         } catch (error) {
-            console.log(error.response)
             return error.response;
         }
     },
