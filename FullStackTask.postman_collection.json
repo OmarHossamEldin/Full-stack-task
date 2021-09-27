@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4c8c845e-2b42-41a4-a8c3-8c60d8bf8f78",
+		"_postman_id": "e0536ac2-2d0b-488b-afda-0555e1155726",
 		"name": "FullStackTask",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -313,12 +313,12 @@
 							"formdata": [
 								{
 									"key": "reviewer_id",
-									"value": "5",
+									"value": "10",
 									"type": "text"
 								},
 								{
 									"key": "reviewee_id",
-									"value": "6",
+									"value": "11",
 									"type": "text"
 								}
 							]
@@ -479,8 +479,8 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "performance_reviewer_id",
-									"value": "1",
+									"key": "performance_review_id",
+									"value": "3",
 									"type": "text"
 								},
 								{
@@ -491,12 +491,13 @@
 							]
 						},
 						"url": {
-							"raw": "{{baseURL}}/feed-Back-requests",
+							"raw": "{{baseURL}}/feed-Back-requests/",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
-								"feed-Back-requests"
+								"feed-Back-requests",
+								""
 							]
 						}
 					},
@@ -541,28 +542,8 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "name",
-									"value": "omar hossam eldin",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "testing@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "P@ssw0rd@softwareEngineer",
-									"type": "text"
-								},
-								{
-									"key": "password_confirmation",
-									"value": "P@ssw0rd@softwareEngineer",
-									"type": "text"
-								},
-								{
-									"key": "is_admin",
-									"value": "1",
+									"key": "feedback",
+									"value": "text text text text text",
 									"type": "text"
 								}
 							]
@@ -751,7 +732,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "4sOQGPj3OgbMgIUJNpyMFYdKe1fZGmyGLl7FiarxsQVQ9BFsfCozCyNgtdic",
+				"value": "6FYT2hkHxxwjrTpvXEEKj2jqIWe997SCpeyBdW1Oy5YR4L6Qlwz8cDMN69FI",
 				"type": "string"
 			}
 		]
